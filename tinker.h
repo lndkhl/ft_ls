@@ -8,32 +8,20 @@
 
 typedef struct                  t_list
 {
-    struct t_list               *left;
-    struct t_list               *right;
+    struct t_list               *next;
     struct t_list               *prev;
 
     char                        *name;
 }                               ls;
 
-typedef struct                  p_list
-{
-    struct p_list               *left;
-    struct p_list               *right;
-    struct p_list               *prev;
-
-    char                        *name;
-}                               print;
-
 int     init_ls_node(char *name);
 int     init_list(char *path);
 int     init_cwd();
-int     init_print_node(ls **node);
-int     init_print(ls **list);
-
 int     init_tree(char *path);
 
+ls      *seek_end(ls **list);
 
-int     func(int aic, char ***av);
+int     func(int ac, char ***av);
 
 int     print_node(ls **node);
 int     print_basic(ls **list);
