@@ -1,6 +1,11 @@
 #include "tinker.h"
 
-int    	func(int ac, char ***av)
+int    		add_node(ls **node, ls **list)
+{
+	
+}
+
+int		is_dir(list **node)
 {
 
 }
