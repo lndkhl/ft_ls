@@ -1,6 +1,6 @@
 #include "tinker.h"
 
-ls			*init_ls_node(const char *name, const char *path)
+ls	*init_ls_node(const char *name, const char *path)
 {
 	ls		*node;
 
@@ -21,7 +21,7 @@ ls			*init_ls_node(const char *name, const char *path)
 	return (node);
 }
 
-ls			*init_list(const char *path)
+ls	*init_list(const char *path)
 {
 	DIR     	*d;
 	ls		*list;
@@ -40,7 +40,7 @@ ls			*init_list(const char *path)
 	return (list);
 }
 
-ls		*init_cwd()
+ls	*init_cwd()
 {
 	char	path[L_MAX];
 	ls	*cwd;

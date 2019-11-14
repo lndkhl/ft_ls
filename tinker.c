@@ -1,6 +1,6 @@
 #include "tinker.h"
 
-int    		add_node(ls *node, ls **list)
+int    	add_node(ls *node, ls **list)
 {
 	ls	*crsr;
 
@@ -17,7 +17,7 @@ int    		add_node(ls *node, ls **list)
 	return (1);
 }
 
-int		is_dir(ls **node)
+int	is_dir(ls **node)
 {
 	if (!(*node))
 	{

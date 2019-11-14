@@ -32,13 +32,13 @@ char	*path_append(const char *path, const char *name);
 int	print_node(ls **node);
 int	print_node_long(ls **list);
 int	print(ls **list);
-int	print_rev(ls **listi);
+int	print_rev(ls **list);
 int	print_rec(ls **list);
 
-int	print_long(ls **liist);
-int	print_long_rec(ls **list);
-
+int	flag_check(char **av, int ac, int *flags);
+int	parse(char **av);
 ls	*sort(ls **list);
+int	is_valid(char *av_i, int *flags);
 
 int	clean(ls **list);
 

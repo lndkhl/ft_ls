@@ -1,6 +1,6 @@
 #include "tinker.h"
 
-int         	clean(ls **list)
+int	clean(ls **list)
 {
 	ls	*crsr;
 	ls	*temp;

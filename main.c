@@ -1,12 +1,19 @@
 #include "tinker.h"
 
-int		main(void)
+int	main(int ac, char **av)
 {
 	ls	*cwd;
+	int	flags;
 
-	cwd = init_cwd();
-	print(&cwd);
-	//print_rev(&cwd);
-	//print_rec(&cwd);
+	flags = 0;
+	if (!flag_check(av, ac, &flags))
+		return(illegal_option);
+	if (ac > 1)
+		parse(av, ac);
+	else
+	{
+		cwd = init_cwd();
+		print(&cwd);
+	}
 	return (0);
 }

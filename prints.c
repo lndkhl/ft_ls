@@ -1,6 +1,6 @@
 #include "tinker.h"
 
-int		print_node(ls **node)
+int	print_node(ls **node)
 {
 	if (!(*node))
 	{
@@ -11,7 +11,7 @@ int		print_node(ls **node)
 	return (1);
 }
 
-int		print_node_long(ls **node)
+int	print_node_long(ls **node)
 {
 	if (!(*node))
 	{
@@ -22,7 +22,7 @@ int		print_node_long(ls **node)
 	return (1);
 }
 
-int		print(ls **list)
+int	print(ls **list)
 {
 	ls	*temp;
 	int	(*print_ptr[2])(ls **node);
@@ -45,7 +45,7 @@ int		print(ls **list)
 	return (1);
 }
 
-int		print_rev(ls **list)
+int	print_rev(ls **list)
 {
 	ls	*temp;
 
@@ -65,7 +65,7 @@ int		print_rev(ls **list)
 	return (1);
 }
 
-int		print_rec(ls **list)
+int	print_rec(ls **list)
 {
 	ls	*temp;
 	ls	*crsr;
