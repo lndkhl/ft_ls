@@ -1,5 +1,6 @@
 #include "tinker.h"
 
+//prints the filename associated with a given node
 int	print_node(ls **node)
 {
 	if (!(*node))
@@ -11,6 +12,7 @@ int	print_node(ls **node)
 	return (1);
 }
 
+//long format of the print_node function (prints additional info)
 int	print_node_long(ls **node)
 {
 	if (!(*node))
@@ -22,6 +24,7 @@ int	print_node_long(ls **node)
 	return (1);
 }
 
+//prints the list via one of the print_node functions
 int	print(ls **list)
 {
 	ls	*temp;
@@ -45,6 +48,7 @@ int	print(ls **list)
 	return (1);
 }
 
+//prints the list in reverse order
 int	print_rev(ls **list)
 {
 	ls	*temp;
@@ -65,6 +69,7 @@ int	print_rev(ls **list)
 	return (1);
 }
 
+//prints the list recursively
 int	print_rec(ls **list)
 {
 	ls	*temp;

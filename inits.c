@@ -1,5 +1,6 @@
 #include "tinker.h"
 
+//initializes a node
 ls	*init_ls_node(const char *name, const char *path)
 {
 	ls		*node;
@@ -21,6 +22,7 @@ ls	*init_ls_node(const char *name, const char *path)
 	return (node);
 }
 
+//initializes a list of the files in a given directory
 ls	*init_list(const char *path)
 {
 	DIR     	*d;
@@ -40,6 +42,7 @@ ls	*init_list(const char *path)
 	return (list);
 }
 
+//initializes the directory from which the function is called
 ls	*init_cwd()
 {
 	char	path[L_MAX];

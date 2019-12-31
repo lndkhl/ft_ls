@@ -3,13 +3,15 @@
 int	main(int ac, char **av)
 {
 	ls	*cwd;
+	//variable that tracks the selected flags
 	int	flags;
 
 	flags = 0;
-	if (!flag_check(av, ac, &flags))
-		return(illegal_option);
+	//checks if flags/files have been specified
 	if (ac > 1)
-		parse(av, ac);
+		if (!flag_check(av, ac, &flags))
+			return(-1);
+	//default behaviour, prints the content of the current working directory
 	else
 	{
 		cwd = init_cwd();

@@ -1,5 +1,6 @@
 #include "tinker.h"
 
+//appends node (param1) to linked list (param2)
 int    	add_node(ls *node, ls **list)
 {
 	ls	*crsr;
@@ -17,6 +18,7 @@ int    	add_node(ls *node, ls **list)
 	return (1);
 }
 
+//determines if a given node is a directory
 int	is_dir(ls **node)
 {
 	if (!(*node))
@@ -31,6 +33,7 @@ int	is_dir(ls **node)
 	return (0);
 }
 
+//returns the last node in a given linked list
 ls		*seek_end(ls **list)
 {
 	ls	*temp;
@@ -46,6 +49,7 @@ ls		*seek_end(ls **list)
 	return (temp);
 }
 
+//updates the absolute path variable of a node
 char		*path_append(const char *path, const char *name)
 {
 	char	*temp;
