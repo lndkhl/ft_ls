@@ -1,67 +1,91 @@
 #include "tinker.h"
 
-int	flag_check(char **av, int ac, int *flags)
+//checks argument vector for flags
+int	flag_check(char **av, int *flags)
 {
 	int	i;
 
 	i = 0;
-	while (++i < ac)
+	while (av[++i] != NULL)
 	{
 		if (av[i][0] == '-' && ft_strlen(av[i]) > 1)
 			if(!is_valid(av[i], flags))
 				return (-1);
 	}
-	return (parse(av, ac));
+	return (1);
 }
 
-int	parse(char **av, int ac)
+//populates the directories and files arrays in main
+int	parse(char **av, int *flags, char **directories, char **files)
 {
+	
 	int	i;
-	char	*directories;
-	char	*files;
+	char *append;
 	
 	i = 0;
-	while (++i < ac)
+	while (av[++i] != NULL && av[i][0] == '-')
 	{
-		if (av[i][0] == '-')
-			
-}
-
-int	sort(ls **list)
-{
-	if (!(*list))
+		if (ft_strlen(av[i]) > 1)
+			if (!flag_check(av, flags))
+				return (-1);
+	}
+	while (av[i] != NULL)
 	{
-		perror("sort");
-		return(-1);
+		if (is_d((append = ft_strdup(av[i]))))
+			push(directories, append);
+		else if (is_file((append = ft_strdup(av[i]))))
+				push(files, append);
+		else
+			print_invalid(av[i]);
+		if (append)
+			free(append);			
+		i++;
 	}
 	return (1);
 }
 
+//checks the validity of flags
 int	is_valid(char *av_i, int *flags)
 {
 	int	i;
 
 	i = 0;
-	while (av_i[i++] != '\0')
+	while (av_i[++i] != '\0')
 	{
 		if (av_i[i] == 'l')
-			*flags == *flags | 1;
+			*flags = *flags | 1;
 		else if (av_i[i] == 'a')
-			*flags == *flags | 2;
+			*flags = *flags | 2;
 		else if (av_i[i] == 'r')
-			*flags == *flags | 3;
+			*flags = *flags | 4;
 		else if (av_i[i] == 'R')
-			*flags == *flags | 4;;
+			*flags = *flags | 8;
 		else if (av_i[i] == 't')
-			*flags == *flags | 5;
+			*flags = *flags | 16;
 		else
-		{
-			ft_putstr("ft_ls: illegal option -- ");
-			ft_putchar(av_i[i]);
-			ft_putchar('\n');
-			ft_putendl("usage ft_ls [l,r,a, R, t] [file ...]");
-			return (-1);	 		
-		}
+			return (print_illegal(av_i[i]));
 	}	
+	return (1);
+}
+
+//creates linked lists of the provided directories' contents
+int	init_directories(char **directories, ls **behemoth)
+{
+	int	i;
+	int j;
+
+	i = 0;
+	if (directories[0] == NULL)
+		return (-1);
+	while (behemoth[i] != NULL)
+		i++;
+	j = 0;
+	while (directories[j] != NULL)
+	{
+		behemoth[i] = init_list(directories[j]);
+		i++;
+		j++;
+	}
+	behemoth[i] = NULL;
 	return (1);
 }

@@ -50,3 +50,19 @@ ls	*init_cwd()
 
 	return (cwd = init_list(getwd(path)));
 }
+
+int	init_files(char **files, ls **behemoth)
+{
+	int	i;
+	int j;
+
+	i = 0;
+	if (!(files[0]))
+		return (-1);
+	while (behemoth[i] != NULL)
+		i++;
+	j = -1;
+	while (files[++j] != NULL)
+		behemoth[i++] =  init_ls_node(files[j], files[j]);
+	return (1);
+}

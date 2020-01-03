@@ -26,3 +26,5 @@ int	clean(ls **list)
 	free(crsr);
 	return (1);
 }
+
+
