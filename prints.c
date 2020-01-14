@@ -21,8 +21,7 @@ int	print_node_long(ls *node)
 		perror("print node long");
 		return (-1);
 	}
-	ft_putendl((node)->name);
-	ft_putendl("long print function functional");
+	print_user(node);
 	return (1);
 }
 
@@ -66,15 +65,17 @@ int	print_basic(ls *node, int *flags)
 	while (temp)
 	{
 		if (!(*flags & 2))
-			while (temp->next && (temp)->name[0] == '.')
+			while (temp && (temp)->name[0] == '.')
 					temp = temp->next;
+		if (!temp)
+			return (1);
 		if (temp && *flags & 1)
 			print_node_long(temp);
 		else if (temp)
 			print_node(temp);
 		temp = temp->next;
 	}
-	clean (&node);
+	//clean (&node);
 	return (1);
 }
 
@@ -94,13 +95,15 @@ int	print_rev(ls *node, int *flags)
 		if (!(*flags & 2))
 			while (temp->prev && (temp)->name[0] == '.')
 				temp = temp->prev;
+		if (!temp)
+			return (1);
 		if (temp && *flags & 1)
 			print_node_long(temp);	
 		 else if (temp)
 			print_node(temp);
 		temp = temp->prev;
 	}
-	clean (&node);
+	//clean (&node);
 	return (1);
 }
 
@@ -116,7 +119,7 @@ int	print_rec(ls *list, int *flags)
 		return (-1);
 	}
 	temp = list;
-	crsr = temp->next;
+	crsr = NULL;
 	if (*flags & 4)
 	{		
 		if (!(print_rev(temp, flags)))
@@ -124,21 +127,24 @@ int	print_rec(ls *list, int *flags)
 	} 
 	else if (!(print_basic(temp, flags)))
 		return (0);
-	while (crsr)
+	if ((list)->next)
 	{
-		if (!(*flags & 2))
-			while (crsr->next && (crsr)->name[0] == '.')
-			{
-				ft_putendl("life");
-				crsr = crsr->next;
-			}
-		if (is_dir(crsr))
+		crsr = (list)->next;
+		while (crsr)
 		{
-			temp = init_list(crsr->abs_path);
-			print_rec(temp, flags);
-
+			if (!(*flags & 2))
+				while ((crsr)->name[0] == '.')
+					crsr = crsr->next;
+			if (!crsr)
+				return (1);
+			if (is_dir(crsr))
+			{
+				ft_putchar('\n');
+				temp = init_list(crsr->abs_path);
+				print_rec(temp, flags);
+			}
+			crsr = crsr->next;
 		}
-		crsr = crsr->next;
 	}
 	//clean(behemoth);
 	return (1);
