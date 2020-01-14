@@ -62,8 +62,9 @@ int	print_illegal(char c);
 
 //long-print (long.c)
 int	print_permissions(ls *node);
-int	print_numfiles(ls *node);
 int	print_user(ls *node);
 int	print_size(ls *node);
 int	print_date_modded(ls *node);
+char *ls_perms(int mode);
+int filetypeletter(int mode);
 #endif

@@ -21,7 +21,7 @@ int	print_node_long(ls *node)
 		perror("print node long");
 		return (-1);
 	}
-	print_user(node);
+	print_permissions(node);
 	return (1);
 }
 
