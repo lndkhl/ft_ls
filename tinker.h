@@ -6,8 +6,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <pwd.h>
+#include <grp.h>
+#include <sys/xattr.h>
+#include <time.h>
 
-#define L_MAX 1024000
+#define L_MAX 2048
 
 typedef struct                  t_list
 {
@@ -55,4 +59,11 @@ int	is_file(char *name);
 int	push(char **container, char *item);
 int	print_invalid(char *invalid);
 int	print_illegal(char c);
+
+//long-print (long.c)
+int	print_permissions(ls *node);
+int	print_numfiles(ls *node);
+int	print_user(ls *node);
+int	print_size(ls *node);
+int	print_date_modded(ls *node);
 #endif
