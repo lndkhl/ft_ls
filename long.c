@@ -98,27 +98,13 @@ int filetypeletter(int mode)
         c = 'b';
     else if (S_ISCHR(mode))
         c = 'c';
-#ifdef S_ISFIFO
     else if (S_ISFIFO(mode))
         c = 'p';
-#endif  /* S_ISFIFO */
-#ifdef S_ISLNK
     else if (S_ISLNK(mode))
         c = 'l';
-#endif  /* S_ISLNK */
-#ifdef S_ISSOCK
     else if (S_ISSOCK(mode))
         c = 's';
-#endif  /* S_ISSOCK */
-#ifdef S_ISDOOR
-    /* Solaris 2.6, etc. */
-    else if (S_ISDOOR(mode))
-        c = 'D';
-#endif  /* S_ISDOOR */
     else
-    {
-        /* Unknown type -- possibly a regular file? */
         c = '?';
-    }
     return(c);
 }
