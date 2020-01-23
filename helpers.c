@@ -42,7 +42,7 @@ int		push(char **container, char *item)
 	}
 	while (container[i] != NULL && i < L_MAX)
 		i++;
-	container[i] = ft_strdup(item);
+	container[i] = ft_strjoin(ft_strdup("./"), item);
 	return (1);
 }
 

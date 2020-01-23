@@ -33,16 +33,22 @@ ls	*init_list(const char *path)
 	DIR     	*d;
 	ls		*list;
 	struct dirent	*dir_struct;
-	char		abs_path[L_MAX];
+	//char		abs_path[L_MAX];
 
+	list = NULL;
 	if (!(path) || !(d = opendir(path)))
 	{
 		perror("init_list");
 		return (NULL);
 	}
-	list = init_ls_node(path, realpath(path, abs_path));
+	dir_struct = readdir(d);
+	if (!(list = init_ls_node(dir_struct->d_name, dir_struct->d_name)))
+	{
+		perror("initial init");
+		return (NULL);
+	}
 	while ((dir_struct = readdir(d)))
-		add_node(init_ls_node(dir_struct->d_name, path_append(abs_path, dir_struct->d_name)), &list);
+		add_node(init_ls_node(dir_struct->d_name, path), &list);
 	closedir(d);
 	return (list);
 }
@@ -50,10 +56,9 @@ ls	*init_list(const char *path)
 //initializes the directory from which the function is called
 ls	*init_cwd()
 {
-	char	path[L_MAX];
 	ls	*cwd;
 
-	return (cwd = init_list(getwd(path)));
+	return (cwd = init_list("."));
 }
 
 int	init_files(char **files, ls **behemoth)

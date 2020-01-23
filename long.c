@@ -70,20 +70,19 @@ char *ls_perms(int mode)
     "r--", "r-x", "rw-", "rwx"};
     char *bits;
 
-	bits = ft_strnew(11);
+	bits = ft_strnew(10);
     bits[0] = filetypeletter(mode);
-	ft_putchar(bits[0]);
-    strcpy(&bits[1], rwx[(mode >> 6)& 7]);
-    strcpy(&bits[4], rwx[(mode >> 3)& 7]);
-    strcpy(&bits[7], rwx[(mode & 7)]);
+	//ft_putchar(bits[0]);
+    ft_strcpy(&bits[1], rwx[(mode >> 6)& 7]);
+    ft_strcpy(&bits[4], rwx[(mode >> 3)& 7]);
+    ft_strcpy(&bits[7], rwx[(mode & 7)]);
     if (mode & S_ISUID)
         bits[3] = (mode & S_IXUSR) ? 's' : 'S';
     if (mode & S_ISGID)
         bits[6] = (mode & S_IXGRP) ? 's' : 'l';
     if (mode & S_ISVTX)
         bits[9] = (mode & S_IXOTH) ? 't' : 'T';
-    bits[10] = '\0';
-    return(bits);
+	return(bits);
 }
 
 int filetypeletter(int mode)
