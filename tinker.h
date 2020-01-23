@@ -13,16 +13,14 @@
 
 #define L_MAX 2048
 
-typedef struct                  t_list
+typedef struct              t_list
 {
- 	struct t_list		*next;
-    	struct t_list		*prev;
-
-	struct stat		stat_buff[L_MAX];
-
-    	char			*name;
-	char			*abs_path;
-}                               ls;
+		struct t_list		*next;
+		struct t_list		*prev;
+		struct stat			stat_buff[L_MAX];
+		char				*name;
+		char				*abs_path;
+}                           ls;
 
 //initializers (inits.c)
 ls	*init_ls_node(const char *name, const char *path);
@@ -67,4 +65,8 @@ int	print_size(ls *node);
 int	print_date_modded(ls *node);
 char *ls_perms(int mode);
 int filetypeletter(int mode);
+
+//sort (sorts.c)
+ls	*sort(ls *list);
+ls	*dup_list(ls *head, ls *node);
 #endif

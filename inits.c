@@ -5,10 +5,15 @@ ls	*init_ls_node(const char *name, const char *path)
 {
 	ls		*node;
 
-	if (!(name) || !(node = (ls *)malloc(sizeof(ls))))
+	if (!(node = (ls *)malloc(sizeof(ls))))
 	{
-		perror("init_ls_node");
+		perror("init_ls_node malloc");
 		return (NULL);;
+	}
+	if (name == NULL)
+	{
+		perror("init_ls_node name");
+		return (NULL);
 	}
 	node->next = NULL;
 	node->prev = NULL;

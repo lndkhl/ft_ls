@@ -6,7 +6,7 @@ PESKY = tinker.h.gch
 LPATH = -L./libft
 LIB = -lft
 OBJ = $(CF:.c=.o)
-CF = tinker.c main.c cleans.c inits.c prints.c flags.c helpers.c long.c
+CF = tinker.c main.c cleans.c inits.c prints.c flags.c helpers.c long.c sorts.c
 RM = rm -f
 
 $(NAME): $(OBJ)
@@ -28,4 +28,4 @@ fclean:
 	$(RM) $(OBJ) $(NAME) $(PESKY)
 
 re:
-	make clean && make all
+	make clean && make $(NAME)

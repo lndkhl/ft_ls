@@ -39,14 +39,11 @@ int	print(ls **behemoth, int *flags)
 	while (behemoth[++i] != NULL)
 	{
 		if (*flags & 8)
-			print_rec(behemoth[i], flags);
+			(*flags & 16) ? print_rec(sort(behemoth[i]), flags) : print_rec(behemoth[i], flags);
 		if (*flags & 4)
-		{		
-			if (!(print_rev(behemoth[i], flags)))
-				return (0);
-		} 
-		else if (!(print_basic(behemoth[i], flags)))
-			return (0);
+			(*flags & 16) ? print_rev(sort(behemoth[i]), flags) : print_rev(behemoth[i], flags);
+		else 
+			(*flags & 16) ? print_basic(sort(behemoth[i]), flags) : print_basic(behemoth[i], flags);
 	}
 	return (1);
 }
