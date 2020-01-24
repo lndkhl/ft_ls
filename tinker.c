@@ -1,21 +1,24 @@
 #include "tinker.h"
 
 //appends node (param1) to linked list (param2)
-int    	add_node(ls *node, ls **list)
+ls    	*add_node(ls *node, ls *list)
 {
 	ls	*crsr;
 
-	if(!(node) || !(*list))
+	if(!(node))
 	{
 		perror("add_node");
-		return(-1);
+		return(NULL);
 	}
-	crsr = *list;
-	while(crsr->next)
-		crsr = crsr->next;
+	if (!(list))
+	{
+		list = node;
+		return (list);
+	}
+	crsr = seek_end(list);
 	crsr->next = node;
 	node->prev = crsr;
-	return (1);
+	return (list);
 }
 
 //determines if a given node is a directory

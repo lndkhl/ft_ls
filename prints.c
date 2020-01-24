@@ -31,16 +31,13 @@ int	print(ls **behemoth, int *flags)
 	int	i;
 
 	if (behemoth[0] == NULL)
-	{
-		perror("main print");
-		return (-1);
-	}
+		behemoth[0] = init_cwd();
 	i = -1;
 	while (behemoth[++i] != NULL)
 	{
 		if (*flags & 8)
 			(*flags & 16) ? print_rec(sort(behemoth[i]), flags) : print_rec(behemoth[i], flags);
-		if (*flags & 4)
+		else if (*flags & 4)
 			(*flags & 16) ? print_rev(sort(behemoth[i]), flags) : print_rev(behemoth[i], flags);
 		else 
 			(*flags & 16) ? print_basic(sort(behemoth[i]), flags) : print_basic(behemoth[i], flags);
@@ -52,7 +49,7 @@ int	print(ls **behemoth, int *flags)
 int	print_basic(ls *node, int *flags)
 {
 	ls	*temp;
-
+	
 	temp = NULL;
 	if (!(temp = node))
 	{
@@ -72,7 +69,7 @@ int	print_basic(ls *node, int *flags)
 			print_node(temp);
 		temp = temp->next;
 	}
-	//clean (&node);
+	//clean (node);
 	return (1);
 }
 
@@ -111,38 +108,34 @@ int	print_rec(ls *list, int *flags)
 	ls	*crsr;
 
 	if (!(list))
-	{
-		perror("print rec");
 		return (-1);
-	}
 	temp = list;
-	crsr = NULL;
-	if (*flags & 4)
-	{		
-		if (!(print_rev(temp, flags)))
-			return (0);
-	} 
-	else if (!(print_basic(temp, flags)))
-		return (0);
-	if ((list)->next)
+	if (temp)
 	{
-		crsr = (list)->next;
+		crsr = temp;
+		if (*flags & 4)
+		{		
+			if (!(print_rev(crsr, flags)))
+				return (0);
+		} 
+		else 
+			print_basic(crsr, flags);
+		temp = NULL;
 		while (crsr)
 		{
 			if (!(*flags & 2))
-				while ((crsr)->name[0] == '.')
+				while ((crsr) && (crsr)->name[0] == '.')
 					crsr = crsr->next;
-			if (!crsr)
-				return (1);
-			if (is_dir(crsr))
+			if ((crsr) && is_dir(crsr))
 			{
-				ft_putchar('\n');
 				temp = init_list(crsr->abs_path);
 				print_rec(temp, flags);
 			}
-			crsr = crsr->next;
+			if (crsr)
+				crsr = crsr->next;
 		}
+		//if (junk)
+		//	clean_one(junk);
 	}
-	//clean(behemoth);
-	return (1);
+	return (0);
 }

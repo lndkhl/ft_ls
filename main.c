@@ -30,8 +30,6 @@ int	main(int ac, char **av)
 		{
 			init_files(files, behemoth);
 			init_directories(directories, behemoth);
-			if (behemoth[0] == NULL)
-				behemoth[0] = init_cwd();
 			print(behemoth, &flags);
 		}
 	}
@@ -41,5 +39,9 @@ int	main(int ac, char **av)
 		behemoth[0] = init_cwd();
 		print(behemoth, &flags);
 	}
+	//clean(behemoth);
+	//clean_string(directories);
+	//clean_string(files);
+	//sleep(20000);
 	return (0);
 }

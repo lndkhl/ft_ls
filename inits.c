@@ -15,11 +15,12 @@ ls	*init_ls_node(const char *name, const char *path)
 		perror("init_ls_node name");
 		return (NULL);
 	}
+
 	node->next = NULL;
 	node->prev = NULL;
 	node->name = ft_strdup(name);
 	node->abs_path = ft_strdup(path);
-	if (lstat(path, node->stat_buff) == -1)
+	if (lstat(node->abs_path, node->stat_buff) == -1)
 	{
 		perror("lstat at init");
 		return(NULL);
@@ -33,7 +34,6 @@ ls	*init_list(const char *path)
 	DIR     	*d;
 	ls		*list;
 	struct dirent	*dir_struct;
-	//char		abs_path[L_MAX];
 
 	list = NULL;
 	if (!(path) || !(d = opendir(path)))
@@ -41,14 +41,8 @@ ls	*init_list(const char *path)
 		perror("init_list");
 		return (NULL);
 	}
-	dir_struct = readdir(d);
-	if (!(list = init_ls_node(dir_struct->d_name, dir_struct->d_name)))
-	{
-		perror("initial init");
-		return (NULL);
-	}
 	while ((dir_struct = readdir(d)))
-		add_node(init_ls_node(dir_struct->d_name, path), &list);
+		list = add_node((init_ls_node(dir_struct->d_name, path_append(path, dir_struct->d_name))), list);
 	closedir(d);
 	return (list);
 }

@@ -11,7 +11,7 @@
 #include <sys/xattr.h>
 #include <time.h>
 
-#define L_MAX 2048
+#define L_MAX 2048000
 
 typedef struct              t_list
 {
@@ -29,7 +29,7 @@ ls	*init_cwd();
 int	init_files(char **files, ls **behemoth);
 
 //modifiers (tinker.c)
-int	add_node(ls *node, ls **list);
+ls	*add_node(ls *node, ls *list);
 int	is_dir(ls *node);
 ls	*seek_end(ls *list);
 char	*path_append(const char *path, const char *name);
@@ -49,13 +49,15 @@ int	is_valid(char *av_i, int *flags);
 int	init_directories(char **directories, ls **behemoth);
 
 //cleanup (cleans.c)
-int	clean(ls **list);
+ls	*clean(ls **list);
+ls	*clean_one(ls *head);
+char	*clean_string(char **string);
 
 //helpers (helpers.c)
 int	is_d(char *name);
 int	is_file(char *name);
 int	push(char **container, char *item);
-int	print_invalid(char *invalid);
+int	print_invalid();
 int	print_illegal(char c);
 
 //long-print (long.c)

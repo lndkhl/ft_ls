@@ -36,9 +36,9 @@ int	parse(char **av, int *flags, char **directories, char **files)
 		else if (is_file((append = ft_strdup(av[i]))))
 				push(files, append);
 		else
-			print_invalid(av[i]);
+			return (print_invalid());
 		if (append)
-			free(append);			
+			ft_strdel(&append);			
 		i++;
 	}
 	return (1);
