@@ -8,7 +8,7 @@ int		print_permissions(ls *node)
 		return (-1);
 	}
 	ft_putstr(ls_perms(node->stat_buff->st_mode));
-	ft_putchar(' ');
+	ft_putstr("  ");
 	return (print_user(node));
 }
 
@@ -28,22 +28,39 @@ int		print_user(ls *node)
 		perror("print_group");
 		return (-1);
 	}
+	if ((node->stat_buff->st_nlink)/ 10 == 0)
+		ft_putchar(' ');
 	ft_putnbr(node->stat_buff->st_nlink);
-	ft_putchar(' ');
+	ft_putstr("  ");
 	ft_putstr(pwuid->pw_name);
-	ft_putchar(' ');
+	ft_putstr("  ");
 	ft_putstr(gid->gr_name);
-	ft_putchar(' ');
+	ft_putstr("  ");
 	return (print_size(node));
 }
 
 int		print_size(ls *node)
 {
+	int	buffer;
+	int	size;
+	int	padding;
+
+	padding = 0;
+	buffer = 9;
 	if (!node)
 	{
 		perror("print_size");
 		return (-1);
 	}
+	size = node->stat_buff->st_size;
+	while (size > 0)
+	{
+		padding++;
+		size /= 10;
+	}
+	padding = buffer - padding;
+	while (padding--)
+		ft_putchar(' ');
 	ft_putnbr(node->stat_buff->st_size);
 	ft_putchar(' ');
 	return (print_date_modded(node));

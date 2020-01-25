@@ -70,5 +70,5 @@ int filetypeletter(int mode);
 
 //sort (sorts.c)
 ls	*sort(ls *list);
-ls	*dup_list(ls *head, ls *node);
+ls	*lex_sort(ls *list);
 #endif

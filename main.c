@@ -2,13 +2,9 @@
 
 int	main(int ac, char **av)
 {
-	//variable that tracks the selected flags
 	int				flags;
-	//directories specified
 	static char		*directories[L_MAX];
-	//files specified
 	static char		*files[L_MAX];
-	//2D array of the linked lists containing everything
 	static ls		*behemoth[L_MAX];
 
 	int i;
@@ -21,7 +17,6 @@ int	main(int ac, char **av)
 		files[i] = NULL;
 		behemoth[i] = NULL;
 	}
-	//checks if flags/files have been specified
 	if (ac > 1)
 	{
 		if (!parse(av, &flags, directories, files))
@@ -30,18 +25,8 @@ int	main(int ac, char **av)
 		{
 			init_files(files, behemoth);
 			init_directories(directories, behemoth);
-			print(behemoth, &flags);
 		}
 	}
-	//default behaviour, prints the current working directory
-	else
-	{
-		behemoth[0] = init_cwd();
-		print(behemoth, &flags);
-	}
-	//clean(behemoth);
-	//clean_string(directories);
-	//clean_string(files);
-	//sleep(20000);
+	print(behemoth, &flags);
 	return (0);
 }

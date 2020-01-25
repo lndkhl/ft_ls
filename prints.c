@@ -35,6 +35,7 @@ int	print(ls **behemoth, int *flags)
 	i = -1;
 	while (behemoth[++i] != NULL)
 	{
+		behemoth[i] = lex_sort(behemoth[i]);
 		if (*flags & 8)
 			(*flags & 16) ? print_rec(sort(behemoth[i]), flags) : print_rec(behemoth[i], flags);
 		else if (*flags & 4)
@@ -42,6 +43,7 @@ int	print(ls **behemoth, int *flags)
 		else 
 			(*flags & 16) ? print_basic(sort(behemoth[i]), flags) : print_basic(behemoth[i], flags);
 	}
+	clean(behemoth);
 	return (1);
 }
 
@@ -120,7 +122,6 @@ int	print_rec(ls *list, int *flags)
 		} 
 		else 
 			print_basic(crsr, flags);
-		temp = NULL;
 		while (crsr)
 		{
 			if (!(*flags & 2))
@@ -134,8 +135,6 @@ int	print_rec(ls *list, int *flags)
 			if (crsr)
 				crsr = crsr->next;
 		}
-		//if (junk)
-		//	clean_one(junk);
 	}
 	return (0);
 }

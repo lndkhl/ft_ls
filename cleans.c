@@ -9,7 +9,6 @@ ls	*clean(ls **list)
 	i = 0;
 	if (!(list[i]))
 	{
-		perror("clean");
 		return (NULL);
 	}
 	while ((crsr = list[i++]))
@@ -37,10 +36,7 @@ ls	*clean_one(ls *head)
 	ls	*temp;
 
 	if (!head)
-	{
-		perror("clean one");
 		return (NULL);
-	}
 	crsr = head;
 	while (crsr)
 	{
@@ -65,10 +61,7 @@ char	*clean_string(char **string)
 
 	i = 0;
 	if (!(string[i]))
-	{
-		perror("clean strings");
 		return (NULL);
-	}
 	while ((crsr = string[i++]))
 	{
 		ft_strdel(&crsr);
