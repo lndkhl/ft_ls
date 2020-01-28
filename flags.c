@@ -18,11 +18,11 @@ int	flag_check(char **av, int *flags)
 //populates the directories and files arrays in main
 int	parse(char **av, int *flags, char **directories, char **files)
 {
-	
 	int	i;
 	char *append;
 	
 	i = 0;
+	append = NULL;
 	while (av[++i] != NULL && av[i][0] == '-')
 	{
 		if (ft_strlen(av[i]) > 1)
@@ -37,8 +37,6 @@ int	parse(char **av, int *flags, char **directories, char **files)
 				push(files, append);
 		else
 			return (print_invalid());
-		if (append)
-			ft_strdel(&append);			
 		i++;
 	}
 	return (1);
@@ -76,7 +74,7 @@ int	init_directories(char **directories, ls **behemoth)
 
 	i = 0;
 	if (directories[0] == NULL)
-		return (-1);
+		return (0);
 	while (behemoth[i] != NULL)
 		i++;
 	j = 0;
@@ -86,6 +84,15 @@ int	init_directories(char **directories, ls **behemoth)
 		i++;
 		j++;
 	}
-	behemoth[i] = NULL;
+	return (1);
+}
+
+int	init(char **files, char **directories, ls **behemoth)
+{
+	if (!(init_files(files, behemoth)) && !(init_directories(directories, behemoth)))
+	{
+		behemoth[0] = init_cwd();
+		return (0);
+	}
 	return (1);
 }

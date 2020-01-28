@@ -2,12 +2,16 @@
 
 int		print_permissions(ls *node)
 {
+	char	*perms;
+
 	if (!node)
 	{
 		perror("permissions");
 		return (-1);
 	}
-	ft_putstr(ls_perms(node->stat_buff->st_mode));
+	perms = ls_perms(node->stat_buff->st_mode);
+	ft_putstr(perms);
+	free(perms);
 	ft_putstr("  ");
 	return (print_user(node));
 }
@@ -16,8 +20,6 @@ int		print_user(ls *node)
 {
 	struct passwd	*pwuid;
 	struct group	*gid;
-	pwuid = (struct passwd *)malloc(L_MAX);
-	gid = (struct group *)malloc(L_MAX);
 	if (!(pwuid = getpwuid(node->stat_buff->st_uid)))
 	{
 		perror("print_user");
@@ -77,6 +79,7 @@ int		print_date_modded(ls *node)
 		return (-1);
 	}
 	ft_putstr(shorter);
+	free(shorter);
 	ft_putchar(' ');
 	ft_putendl(node->name);
 	return (1);
@@ -89,7 +92,6 @@ char *ls_perms(int mode)
 
 	bits = ft_strnew(10);
     bits[0] = filetypeletter(mode);
-	//ft_putchar(bits[0]);
     ft_strcpy(&bits[1], rwx[(mode >> 6)& 7]);
     ft_strcpy(&bits[4], rwx[(mode >> 3)& 7]);
     ft_strcpy(&bits[7], rwx[(mode & 7)]);

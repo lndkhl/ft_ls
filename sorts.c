@@ -1,105 +1,87 @@
 #include "tinker.h"
 
 //sorts list by last modification date and time
-ls		*sort(ls *list)
+ls		*sort(ls *list, int type)
 {
 	ls	*temp;
 	ls	*sort;
 	ls	*head;
-	int j;
-	int	i;
+	int	j;
 
-	j = 0;
-	head = list;
 	sort = NULL;
-	if (!list)
+	j = count_nodes(list);
+	while ((list) && j--)
 	{
-		perror("sort");
-		return (NULL);
-	}
-	temp = list;
-	while (temp)
-	{
-		j++;
-		temp = temp->next;
-	}
-	while ((temp = list) && (i = j--))
-	{
-		head = temp;
-		while ((temp) && i--)
+		head = list;
+		temp = list->next;
+		while (temp)
 		{
-			if (head->stat_buff->st_mtime < temp->stat_buff->st_mtime)
-				head = temp;
-			else if (head->stat_buff->st_mtime == temp->stat_buff->st_mtime && head->stat_buff->st_mtimespec.tv_nsec < temp->stat_buff->st_mtimespec.tv_nsec)
-				head = temp;
+			head = compare(head, temp, type);
 			temp = temp->next;
 		}
 		if (head == list)
-		list = list->next;
+			list = list->next;
 		else if (head->prev)
 			head->prev->next = head->next;
 		if (head->next)
 			head->next->prev = head->prev;
-		if (!sort)
-			sort = head;
-		else
-		{
-			temp = seek_end(sort);
-			temp->next = head;
-			head->next = NULL;
-			head->prev = temp;
-		}
+		sort = update_sort(sort, head);
 	}
 	return (sort);
 }
 
-//sorts list lexicographically
-ls	*lex_sort(ls *list)
+int		count_nodes(ls *temp)
 {
-	ls	*temp;
-	ls	*sort;
-	ls	*head;
-	int j;
-	int	i;
+	ls	*crsr;
+	int	j;
 
 	j = 0;
-	head = list;
-	sort = NULL;
-	if (!list)
-	{
-		perror("sort");
-		return (NULL);
-	}
-	temp = list;
-	while (temp)
+	crsr = temp;
+	while (crsr)
 	{
 		j++;
-		temp = temp->next;
+		crsr = crsr->next;
 	}
-	while ((temp = list) && (i = j--))
+	return (j);
+}
+
+
+ls		*compare(ls *head, ls *temp, int type)
+{
+	if (type == 1)
 	{
-		head = temp;
-		while ((temp) && i--)
+		if (head->stat_buff->st_mtime < temp->stat_buff->st_mtime)
+				return (temp);
+		else if (head->stat_buff->st_mtime == temp->stat_buff->st_mtime && head->stat_buff->st_mtimespec.tv_nsec < temp->stat_buff->st_mtimespec.tv_nsec)
+				return (temp);
+		return (head);
+	}
+	else if (type == 0)
+	{
+		if (ft_strcmp(temp->name, head->name) < 1)
+			return temp;
+		return (head);
+	}
+	else
+		return (NULL);
+}
+
+ls		*update_sort(ls *sort, ls *head)
+{
+	ls	*temp;
+
+	temp = NULL;
+		if (!(temp = seek_end(sort)))
 		{
-			if ((ft_strcmp(head->name, temp->name)) < 1)
-				head = temp;
-			temp = temp->next;
-		}
-		if (head == list)
-		list = list->next;
-		else if (head->prev)
-			head->prev->next = head->next;
-		if (head->next)
-			head->next->prev = head->prev;
-		if (!sort)
 			sort = head;
+			head->next = NULL;
+			head->prev = NULL;
+		}
 		else
 		{
-			temp = seek_end(sort);
 			temp->next = head;
 			head->next = NULL;
 			head->prev = temp;
 		}
-	}
 	return (sort);
 }

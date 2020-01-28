@@ -31,18 +31,23 @@ ls	*init_ls_node(const char *name, const char *path)
 //initializes a list of the files in a given directory
 ls	*init_list(const char *path)
 {
-	DIR     	*d;
-	ls		*list;
+	DIR     		*d;
+	ls				*list;
 	struct dirent	*dir_struct;
+	char			*appended;
 
 	list = NULL;
-	if (!(path) || !(d = opendir(path)))
-	{
-		perror("init_list");
+	appended = ((path[0] == '/') || (path[0] == '~') == 0) \
+	? ft_strdup(path) : p_append(".", path);
+	if (!(d = opendir(appended)))
 		return (NULL);
-	}
+	ft_strdel(&appended);
 	while ((dir_struct = readdir(d)))
-		list = add_node((init_ls_node(dir_struct->d_name, path_append(path, dir_struct->d_name))), list);
+	{
+		appended = p_append(path, dir_struct->d_name);
+		list = add_node((init_ls_node(dir_struct->d_name, appended)), list);
+		ft_strdel(&appended);
+	}
 	closedir(d);
 	return (list);
 }
@@ -62,7 +67,7 @@ int	init_files(char **files, ls **behemoth)
 
 	i = 0;
 	if (!(files[0]))
-		return (-1);
+		return (0);
 	while (behemoth[i] != NULL)
 		i++;
 	j = -1;

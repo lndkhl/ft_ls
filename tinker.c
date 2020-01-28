@@ -42,10 +42,7 @@ ls		*seek_end(ls *list)
 	ls	*temp;
 
 	if(!(list))
-	{
-		perror("seek_end");
 		return (NULL);
-	}
 	temp = (list);
 	while (temp->next)
 		temp = temp->next;
@@ -53,18 +50,18 @@ ls		*seek_end(ls *list)
 }
 
 //updates the absolute path variable of a node
-char		*path_append(const char *path, const char *name)
+char		*p_append(const char *path, const char *name)
 {
 	char	*temp;
+	char	*slash;
 	char	*appended;
 
 	if (!(path) || !(name))
-	{
-		perror("path_append");
 		return (NULL);
-	}
-	temp = ft_strjoin(path, "/");
+	slash = ft_strdup("/");
+	temp = ft_strjoin(path, slash);
 	appended = ft_strjoin(temp, name);
-	ft_strdel(&temp);
+	free(temp);
+	free(slash);
 	return (appended);
 }

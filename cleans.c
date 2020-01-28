@@ -1,71 +1,42 @@
 #include "tinker.h"
 
-ls	*clean(ls **list)
+void	clean(ls **list)
 {
 	ls	*crsr;
-	ls	*temp;
 	int	i;
 
-	i = 0;
-	if (!(list[i]))
+	i = -1;
+	while ((crsr = list[++i]))
 	{
-		return (NULL);
+		clean_one(crsr);
 	}
-	while ((crsr = list[i++]))
-	{
-		while(crsr)
-		{
-			if (crsr->next)
-				temp = crsr->next;
-			else
-				temp = NULL;
-			if (crsr->name)
-				ft_strdel(&(crsr->name));
-			if (crsr->abs_path)
-				ft_strdel(&(crsr->abs_path));
-			free(crsr);
-			crsr = temp;
-		}
-	}
-	return ((crsr = NULL));
+	return ;
 }
 
-ls	*clean_one(ls *head)
+void	clean_one(ls *head)
 {
-	ls	*crsr;
 	ls	*temp;
 
-	if (!head)
-		return (NULL);
-	crsr = head;
-	while (crsr)
+	if (!(temp = head))
+		return ;
+	while (temp)
 	{
-		if (crsr->next)
-			temp = crsr->next;
-		else
-			temp = NULL;
-		if (crsr->name)
-			ft_strdel(&(crsr->name));
-		if (crsr->abs_path)
-			ft_strdel(&(crsr->abs_path));
-		free(crsr);
-		crsr = temp;
+		ft_strdel(&(temp->name));
+		ft_strdel(&(temp->abs_path));
+		temp = temp->next;
 	}
-	return ((crsr = NULL));
+	return ;
 }
 
-char	*clean_string(char **string)
+void	clean_string(char **string)
 {
 	char *crsr;
 	int		i;
 
 	i = 0;
 	if (!(string[i]))
-		return (NULL);
+		return ;
 	while ((crsr = string[i++]))
-	{
 		ft_strdel(&crsr);
-		free(crsr);
-	}
-	return ((crsr = NULL));
+	return ;
 }

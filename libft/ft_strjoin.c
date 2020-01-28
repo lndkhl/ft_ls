@@ -32,7 +32,6 @@ char		*ft_strjoin(const char *s1, const char *s2)
 		h = ft_strlen(s2);
 		while (j < h)
 			n[i++] = s2[j++];
-		n[i] = '\0';
 		return (n);
 	}
 	return (NULL);

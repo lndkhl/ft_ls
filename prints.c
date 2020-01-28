@@ -4,11 +4,7 @@
 int	print_node(ls *node)
 {
 	if (!(node))
-	{
-		perror("print node");
 		return (-1);
-	}
-	//ft_putendl("checkpoint 5");
 	ft_putendl((node)->name);
 	return (1);
 }
@@ -17,10 +13,7 @@ int	print_node(ls *node)
 int	print_node_long(ls *node)
 {
 	if (!(node))
-	{
-		perror("print node long");
 		return (-1);
-	}
 	print_permissions(node);
 	return (1);
 }
@@ -29,22 +22,20 @@ int	print_node_long(ls *node)
 int	print(ls **behemoth, int *flags)
 {
 	int	i;
+	int	type;
 
-	if (behemoth[0] == NULL)
-		behemoth[0] = init_cwd();
 	i = -1;
 	while (behemoth[++i] != NULL)
 	{
-		behemoth[i] = lex_sort(behemoth[i]);
+		type = (*flags & 16) ? 1 : 0;
 		if (*flags & 8)
-			(*flags & 16) ? print_rec(sort(behemoth[i]), flags) : print_rec(behemoth[i], flags);
+			print_rec(sort(behemoth[i], type), type, flags);
 		else if (*flags & 4)
-			(*flags & 16) ? print_rev(sort(behemoth[i]), flags) : print_rev(behemoth[i], flags);
+			print_rev(sort(behemoth[i], type), flags);
 		else 
-			(*flags & 16) ? print_basic(sort(behemoth[i]), flags) : print_basic(behemoth[i], flags);
+			print_basic(sort(behemoth[i], type), flags);
 	}
-	clean(behemoth);
-	return (1);
+	return (0);
 }
 
 //prints each node according to the desired formatting
@@ -54,24 +45,13 @@ int	print_basic(ls *node, int *flags)
 	
 	temp = NULL;
 	if (!(temp = node))
-	{
-		perror("print basic");
 		return (-1);
-	}
 	while (temp)
 	{
-		if (!(*flags & 2))
-			while (temp && (temp)->name[0] == '.')
-					temp = temp->next;
-		if (!temp)
-			return (1);
-		if (temp && *flags & 1)
-			print_node_long(temp);
-		else if (temp)
-			print_node(temp);
+		if ((*flags & 2) || (temp)->name[0] != '.')
+			(*flags & 1) ? print_node_long(temp) : print_node(temp);
 		temp = temp->next;
 	}
-	//clean (node);
 	return (1);
 }
 
@@ -82,59 +62,38 @@ int	print_rev(ls *node, int *flags)
 
 	temp = NULL;
 	if (!(node) || !(temp = seek_end(node)))
-	{
-		perror("print rev");
 		return (-1);
-	}
 	while (temp)
 	{
-		if (!(*flags & 2))
-			while (temp->prev && (temp)->name[0] == '.')
-				temp = temp->prev;
-		if (!temp)
-			return (1);
-		if (temp && *flags & 1)
-			print_node_long(temp);	
-		 else if (temp)
-			print_node(temp);
+		if ((*flags & 2) || (temp)->name[0] != '.')
+			(*flags & 1) ? print_node_long(temp) : print_node(temp);	
 		temp = temp->prev;
 	}
-	//clean (&node);
 	return (1);
 }
 
-//prints the list recursively
-int	print_rec(ls *list, int *flags)
+//prints recursively
+ls	*print_rec(ls *list, int type, int *flags)
 {
 	ls	*temp;
 	ls	*crsr;
 
-	if (!(list))
-		return (-1);
 	temp = list;
-	if (temp)
+	if ((crsr = temp))
 	{
-		crsr = temp;
-		if (*flags & 4)
-		{		
-			if (!(print_rev(crsr, flags)))
-				return (0);
-		} 
-		else 
-			print_basic(crsr, flags);
+		(*flags & 4) ? print_rev(sort(crsr, type), flags) : print_basic(sort(crsr, type), flags);
 		while (crsr)
 		{
-			if (!(*flags & 2))
-				while ((crsr) && (crsr)->name[0] == '.')
-					crsr = crsr->next;
-			if ((crsr) && is_dir(crsr))
+			if (is_dir(crsr) && ((*flags & 2) || crsr->name[0] != '.'))
 			{
-				temp = init_list(crsr->abs_path);
-				print_rec(temp, flags);
+				ft_putchar('\n');
+				ft_putstr(crsr->abs_path);
+				ft_putendl(":");
+				print_rec(init_list(crsr->abs_path), type, flags);
 			}
-			if (crsr)
-				crsr = crsr->next;
+			crsr = crsr->next;
 		}
 	}
-	return (0);
+	clean_one(temp);
+	return (temp);
 }
