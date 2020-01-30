@@ -28,12 +28,15 @@ int	print(ls **behemoth, int *flags)
 	while (behemoth[++i] != NULL)
 	{
 		type = (*flags & 16) ? 1 : 0;
+		behemoth[i] = sort(behemoth[i], type);
+		if (*flags & 1 && (!(*flags & 8)))
+			print_titles(behemoth[i]);
 		if (*flags & 8)
-			print_rec(sort(behemoth[i], type), type, flags);
+			print_rec(behemoth[i], type, flags);
 		else if (*flags & 4)
-			print_rev(sort(behemoth[i], type), flags);
+			print_rev(behemoth[i], flags);
 		else 
-			print_basic(sort(behemoth[i], type), flags);
+			print_basic(behemoth[i], flags);
 	}
 	return (0);
 }
@@ -81,6 +84,9 @@ ls	*print_rec(ls *list, int type, int *flags)
 	temp = list;
 	if ((crsr = temp))
 	{
+				ft_putstr("total ");
+				ft_putnbr(crsr->total);
+				ft_putchar('\n');
 		(*flags & 4) ? print_rev(sort(crsr, type), flags) : print_basic(sort(crsr, type), flags);
 		while (crsr)
 		{
@@ -88,7 +94,7 @@ ls	*print_rec(ls *list, int type, int *flags)
 			{
 				ft_putchar('\n');
 				ft_putstr(crsr->abs_path);
-				ft_putendl(":");
+				ft_putstr(":\n");
 				print_rec(init_list(crsr->abs_path), type, flags);
 			}
 			crsr = crsr->next;
@@ -96,4 +102,18 @@ ls	*print_rec(ls *list, int type, int *flags)
 	}
 	clean_one(temp);
 	return (temp);
+}
+
+int	print_titles(ls *node)
+{	
+	if (!node)
+		return (0);
+	if (node->dir_name)
+	{
+		ft_putstr(node->dir_name);
+		ft_putstr(":\n");
+	}
+	ft_putnbr(node->total);
+	ft_putchar('\n');
+	return (1);
 }

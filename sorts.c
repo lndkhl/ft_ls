@@ -85,3 +85,22 @@ ls		*update_sort(ls *sort, ls *head)
 		}
 	return (sort);
 }
+
+void	sort_dirs(ls **behemoth, int index)
+{
+	int	i;
+	ls	*temp;
+	ls	*crsr;
+
+	while ((temp = behemoth[index]))
+	{
+		i = index;
+		while ((crsr = behemoth[++i]))
+			if (ft_strcmp(temp->dir_name, crsr->dir_name) > 0)
+			{
+				behemoth[index] = crsr;
+				behemoth[i] = temp;
+			}
+			index++;
+	}
+}

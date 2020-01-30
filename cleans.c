@@ -7,9 +7,7 @@ void	clean(ls **list)
 
 	i = -1;
 	while ((crsr = list[++i]))
-	{
 		clean_one(crsr);
-	}
 	return ;
 }
 
@@ -23,6 +21,7 @@ void	clean_one(ls *head)
 	{
 		ft_strdel(&(temp->name));
 		ft_strdel(&(temp->abs_path));
+		ft_strdel(&(temp->dir_name));
 		temp = temp->next;
 	}
 	return ;

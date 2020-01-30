@@ -13,8 +13,10 @@ ls    	*add_node(ls *node, ls *list)
 	if (!(list))
 	{
 		list = node;
+		list->total = node->stat_buff->st_blocks;
 		return (list);
 	}
+	list->total += node->stat_buff->st_blocks;
 	crsr = seek_end(list);
 	crsr->next = node;
 	node->prev = crsr;

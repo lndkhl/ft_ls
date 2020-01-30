@@ -6,7 +6,7 @@ int	flag_check(char **av, int *flags)
 	int	i;
 
 	i = 0;
-	while (av[++i] != NULL)
+	while (av[++i] != NULL && av[i][0] == '-')
 	{
 		if (av[i][0] == '-' && ft_strlen(av[i]) > 1)
 			if(!is_valid(av[i], flags))
@@ -16,27 +16,24 @@ int	flag_check(char **av, int *flags)
 }
 
 //populates the directories and files arrays in main
-int	parse(char **av, int *flags, char **directories, char **files)
+int	parse(char **av, char **directories, char **files, char **nonexistant)
 {
 	int	i;
 	char *append;
 	
-	i = 0;
+	i = 1;
 	append = NULL;
-	while (av[++i] != NULL && av[i][0] == '-')
-	{
-		if (ft_strlen(av[i]) > 1)
-			if (!flag_check(av, flags))
-				return (-1);
-	}
+	while (av[i] != NULL && av[i][0] == '-')
+		i++;
 	while (av[i] != NULL)
 	{
-		if (is_d((append = ft_strdup(av[i]))))
+		append = ft_strdup(av[i]);
+		if (is_d(append))
 			push(directories, append);
-		else if (is_file((append = ft_strdup(av[i]))))
-				push(files, append);
+		else if (is_file(append))
+			push(files, append);
 		else
-			return (print_invalid());
+			push(nonexistant, append);
 		i++;
 	}
 	return (1);
@@ -66,17 +63,31 @@ int	is_valid(char *av_i, int *flags)
 	return (1);
 }
 
+//creates linked list of files not found
+int	print_nonexistant(char **nonexistant)
+{
+	int	i;
+
+	i = 0;
+	if (nonexistant[i] == NULL)
+		return (0);
+	while (nonexistant[i] != NULL)
+		print_invalid(nonexistant[i++]);
+	return (1);
+}
 //creates linked lists of the provided directories' contents
 int	init_directories(char **directories, ls **behemoth)
 {
 	int	i;
 	int j;
+	int	k;
 
 	i = 0;
 	if (directories[0] == NULL)
 		return (0);
 	while (behemoth[i] != NULL)
 		i++;
+	k = i;
 	j = 0;
 	while (directories[j] != NULL)
 	{
@@ -84,12 +95,22 @@ int	init_directories(char **directories, ls **behemoth)
 		i++;
 		j++;
 	}
+	sort_dirs(behemoth, k);
 	return (1);
 }
 
-int	init(char **files, char **directories, ls **behemoth)
+//initializes the containers
+int	init(char **nonexistant, char **files, char **directories, ls **behemoth)
 {
-	if (!(init_files(files, behemoth)) && !(init_directories(directories, behemoth)))
+	int i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	print_nonexistant(nonexistant);
+	i = init_files(files, behemoth);
+	j = init_directories(directories, behemoth);
+	if (!i && !j)
 	{
 		behemoth[0] = init_cwd();
 		return (0);

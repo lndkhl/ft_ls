@@ -1,7 +1,7 @@
 #include "tinker.h"
 
 //initializes a node
-ls	*init_ls_node(const char *name, const char *path)
+ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 {
 	ls		*node;
 
@@ -20,6 +20,8 @@ ls	*init_ls_node(const char *name, const char *path)
 	node->prev = NULL;
 	node->name = ft_strdup(name);
 	node->abs_path = ft_strdup(path);
+	node->dir_name = ft_strdup(dir_name);
+	ft_memset(node->link_buff, '\0', L_MIN);
 	if (lstat(node->abs_path, node->stat_buff) == -1)
 	{
 		perror("lstat at init");
@@ -45,7 +47,7 @@ ls	*init_list(const char *path)
 	while ((dir_struct = readdir(d)))
 	{
 		appended = p_append(path, dir_struct->d_name);
-		list = add_node((init_ls_node(dir_struct->d_name, appended)), list);
+		list = add_node((init_ls_node(dir_struct->d_name, path, appended)), list);
 		ft_strdel(&appended);
 	}
 	closedir(d);
@@ -62,9 +64,11 @@ ls	*init_cwd()
 
 int	init_files(char **files, ls **behemoth)
 {
-	int	i;
-	int j;
+	int		i;
+	int 	j;
+	char	*dir_name;
 
+	dir_name = NULL;
 	i = 0;
 	if (!(files[0]))
 		return (0);
@@ -72,6 +76,6 @@ int	init_files(char **files, ls **behemoth)
 		i++;
 	j = -1;
 	while (files[++j] != NULL)
-		behemoth[i++] =  init_ls_node(files[j], files[j]);
+		behemoth[i++] =  init_ls_node(files[j], dir_name, files[j]);
 	return (1);
 }

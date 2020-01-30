@@ -6,7 +6,7 @@ int		is_d(char *name)
 	struct stat	stat_buff;
 	
 	if (lstat(name, &stat_buff) == -1)
-		return (-1);
+		return (0);
 	if ((stat_buff.st_mode & S_IFMT) == S_IFDIR)
 		return (1);
 	return (0);
@@ -17,7 +17,7 @@ int		is_file(char *name)
 	struct stat stat_buff;
 
 	if (lstat(name, &stat_buff) == -1)
-		return (-1);
+		return (0);
 	if ((stat_buff.st_mode & S_IFMT) != (S_IFDIR))
 		return (1);
 	return (0);
@@ -41,10 +41,12 @@ int		push(char **container, char *item)
 }
 
 //prints that an invalid filename has been entered
-int		print_invalid()
+int		print_invalid(char *nonexistant)
 {
-	ft_putendl("ft_ls: No such file or directory");
-	return (-1);
+	ft_putstr("ft_ls: ");
+	ft_putstr(nonexistant);
+	ft_putendl(": No such file or directory");
+	return (0);
 }
 
 //prints that an illegal option has been chosen, terminates
@@ -53,5 +55,5 @@ int		print_illegal(char c)
 	ft_putstr("ft_ls: illegal option -- ");
 	ft_putchar(c);
 	ft_putendl("'\n'usage ft_ls [l,r,a, R, t] [file ...]");
-	return (-1);
+	return (0);
 }

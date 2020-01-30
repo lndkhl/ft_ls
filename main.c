@@ -5,8 +5,9 @@ int	main(int ac, char **av)
 	int				flags;
 	static char		*directories[L_MAX];
 	static char		*files[L_MAX];
+	static char		*nonexistant[L_MAX];
 	static ls		*behemoth[L_MAX];
-	int 			i;
+	int				i;
 
 	flags = 0;
 	i = -1;
@@ -14,15 +15,18 @@ int	main(int ac, char **av)
 	{
 		directories[i] = NULL;
 		files[i] = NULL;
+		nonexistant[i] = NULL;
 		behemoth[i] = NULL;
 	}
 	if (ac > 1)
-		if (!(parse(av, &flags, directories, files)))
+		if (!flag_check(av, &flags))
 			return (0);
-	init(files, directories, behemoth);
+	parse(av, directories, files, nonexistant);
+	init(nonexistant, files, directories, behemoth);
 	print(behemoth, &flags);
+	clean_string(nonexistant);
 	clean_string(files);
 	clean_string(directories);
-	sleep(30);
+	//sleep(30);
 	return (0);
 }

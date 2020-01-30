@@ -10,6 +10,8 @@ int		print_permissions(ls *node)
 		return (-1);
 	}
 	perms = ls_perms(node->stat_buff->st_mode);
+	if (perms[0] == 'l')
+		readlink(node->abs_path, node->link_buff, L_MIN);
 	ft_putstr(perms);
 	free(perms);
 	ft_putstr("  ");
@@ -25,7 +27,7 @@ int		print_user(ls *node)
 		perror("print_user");
 		return (-1);
 	}
-	if (!(gid = getgrgid(pwuid->pw_gid)))
+	if (!(gid = getgrgid(node->stat_buff->st_gid)))
 	{
 		perror("print_group");
 		return (-1);
@@ -82,6 +84,11 @@ int		print_date_modded(ls *node)
 	free(shorter);
 	ft_putchar(' ');
 	ft_putendl(node->name);
+	if (node->link_buff[0] != '\0')
+	{
+		ft_putstr(" -> ");
+		ft_putendl(node->link_buff);
+	}
 	return (1);
 }
 char *ls_perms(int mode)
