@@ -1,5 +1,6 @@
 #include "tinker.h"
 
+//prints file permissions
 int		print_permissions(ls *node)
 {
 	char	*perms;
@@ -18,6 +19,7 @@ int		print_permissions(ls *node)
 	return (print_user(node));
 }
 
+//prints user
 int		print_user(ls *node)
 {
 	struct passwd	*pwuid;
@@ -43,6 +45,7 @@ int		print_user(ls *node)
 	return (print_size(node));
 }
 
+//prints file size
 int		print_size(ls *node)
 {
 	int	buffer;
@@ -70,6 +73,7 @@ int		print_size(ls *node)
 	return (print_date_modded(node));
 }
 
+//prints last modification date
 int		print_date_modded(ls *node)
 {
 	char	*shorter;
@@ -91,6 +95,8 @@ int		print_date_modded(ls *node)
 	}
 	return (1);
 }
+
+//determines file permissions
 char *ls_perms(int mode)
 {
     char *rwx[] = {"---", "--x", "-w-", "-wx",
@@ -109,27 +115,4 @@ char *ls_perms(int mode)
     if (mode & S_ISVTX)
         bits[9] = (mode & S_IXOTH) ? 't' : 'T';
 	return(bits);
-}
-
-int filetypeletter(int mode)
-{
-    char    c;
-
-    if (S_ISREG(mode))
-        c = '-';
-    else if (S_ISDIR(mode))
-        c = 'd';
-    else if (S_ISBLK(mode))
-        c = 'b';
-    else if (S_ISCHR(mode))
-        c = 'c';
-    else if (S_ISFIFO(mode))
-        c = 'p';
-    else if (S_ISLNK(mode))
-        c = 'l';
-    else if (S_ISSOCK(mode))
-        c = 's';
-    else
-        c = '?';
-    return(c);
 }

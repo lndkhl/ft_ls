@@ -27,59 +27,57 @@ typedef struct              t_list
 }                           ls;
 
 //initializers (inits.c)
-ls	*init_ls_node(const char *name, const char *dir_name, const char *path);
-ls	*init_list(const char *path);
-ls	*init_cwd();
-int	init_files(char **files, ls **behemoth);
+ls		*init_ls_node(const char *name, const char *dir_name, const char *path);
+ls		*init_list(const char *path);
+ls		*init_cwd();
+int		init_files(char **files, ls **behemoth);
+int		init_directories(char **directories, ls **behemoth);
 
 //modifiers (tinker.c)
-ls	*add_node(ls *node, ls *list);
-int	is_dir(ls *node);
-ls	*seek_end(ls *list);
+ls		*add_node(ls *node, ls *list);
+int		is_dir(ls *node);
+ls		*seek_end(ls *list);
 char	*p_append(const char *path, const char *name);
+ls		*sort(ls *list, int type);
 
 //printers (prints.c)
-int	print_node(ls *node);
-int	print_node_long(ls *list);
-int	print(ls **list, int *flags);
-int	print_rev(ls *node, int *flags);
-ls	*print_rec(ls *list, int type, int *flags);
-int	print_basic(ls *node, int *flags);
-int	print_titles(ls *node);
+int		print_node(ls *node, int *flags);
+int		print(ls **list, int *flags);
+ls		*print_rec(ls *list, int type, int *flags);
+int		print_basic(ls *node, int *flags);
+int		print_titles(ls *node);
 
 //pre-wash (flags.c)
-int	flag_check(char **av, int *flags);
-int	parse(char **av, char **directories, char **files, char **nonexistant);
-int	is_valid(char *av_i, int *flags);
-int	print_nonexistant(char **nonexistant);
-int	init_directories(char **directories, ls **behemoth);
-int	init(char **nonexistant, char **files, char **directories, ls **behemoth);
+int		flag_check(char **av, int *flags);
+int		parse(char **av, char **directories, char **files, char **nonexistant);
+int		is_valid(char *av_i, int *flags);
+int		print_nonexistant(char **nonexistant);
+int		init(char **nonexistant, char **files, char **directories, ls **behemoth);
 
 //cleanup (cleans.c)
 void	clean(ls **list);
 void	clean_one(ls *head);
 void	clean_string(char **string);
+int 	filetypeletter(int mode);
 
 //helpers (helpers.c)
-int	is_d(char *name);
-int	is_file(char *name);
-int	push(char **container, char *item);
-int	print_invalid(char *nonexistant);
-int	print_illegal(char c);
+int		is_d(char *name);
+int		is_file(char *name);
+int		push(char **container, char *item);
+int		print_invalid(char *nonexistant);
+int		print_illegal(char c);
 
 //long-print (long.c)
-int	print_permissions(ls *node);
-int	print_user(ls *node);
-int	print_size(ls *node);
-int	print_date_modded(ls *node);
-char *ls_perms(int mode);
-int filetypeletter(int mode);
+int		print_permissions(ls *node);
+int		print_user(ls *node);
+int		print_size(ls *node);
+int		print_date_modded(ls *node);
+char 	*ls_perms(int mode);
 
 //sort (sorts.c)
-ls	*sort(ls *list, int type);
-ls	*sorter(ls *list, ls *head, int type);
-int	count_nodes(ls *temp);
-ls	*compare(ls *head, ls *temp, int type);
-ls	*update_sort(ls *sort, ls *head);
+ls		*sorter(ls *list, ls *head, int type);
+int		count_nodes(ls *temp);
+ls		*compare(ls *head, ls *temp, int type);
+ls		*update_sort(ls *sort, ls *head);
 void	sort_dirs(ls **behemoth, int index);
 #endif

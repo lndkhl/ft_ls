@@ -1,35 +1,5 @@
 #include "tinker.h"
 
-//sorts list by last modification date and time
-ls		*sort(ls *list, int type)
-{
-	ls	*temp;
-	ls	*sort;
-	ls	*head;
-	int	j;
-
-	sort = NULL;
-	j = count_nodes(list);
-	while ((list) && j--)
-	{
-		head = list;
-		temp = list->next;
-		while (temp)
-		{
-			head = compare(head, temp, type);
-			temp = temp->next;
-		}
-		if (head == list)
-			list = list->next;
-		else if (head->prev)
-			head->prev->next = head->next;
-		if (head->next)
-			head->next->prev = head->prev;
-		sort = update_sort(sort, head);
-	}
-	return (sort);
-}
-
 int		count_nodes(ls *temp)
 {
 	ls	*crsr;

@@ -6,21 +6,17 @@ ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 	ls		*node;
 
 	if (!(node = (ls *)malloc(sizeof(ls))))
-	{
-		perror("init_ls_node malloc");
 		return (NULL);;
-	}
 	if (name == NULL)
-	{
-		perror("init_ls_node name");
 		return (NULL);
-	}
-
 	node->next = NULL;
 	node->prev = NULL;
 	node->name = ft_strdup(name);
 	node->abs_path = ft_strdup(path);
-	node->dir_name = ft_strdup(dir_name);
+	if (dir_name)
+		node->dir_name = ft_strdup(dir_name);
+	else
+		node->dir_name = NULL;
 	ft_memset(node->link_buff, '\0', L_MIN);
 	if (lstat(node->abs_path, node->stat_buff) == -1)
 	{
@@ -62,6 +58,7 @@ ls	*init_cwd()
 	return (cwd = init_list("."));
 }
 
+//initializes the nodes corresponding to requested filename
 int	init_files(char **files, ls **behemoth)
 {
 	int		i;
@@ -77,5 +74,28 @@ int	init_files(char **files, ls **behemoth)
 	j = -1;
 	while (files[++j] != NULL)
 		behemoth[i++] =  init_ls_node(files[j], dir_name, files[j]);
+	return (1);
+}
+//creates linked lists of the provided directories' contents
+int init_directories(char **directories, ls **behemoth)
+{
+	int i;
+	int j;
+	int k;
+
+	 i = 0;
+	if (directories[0] == NULL)
+		return (0);
+	while (behemoth[i] != NULL)
+		i++;
+	k = i;
+	j = 0;
+	while (directories[j] != NULL)
+	{
+		behemoth[i] = init_list(directories[j]);
+		i++;
+		j++;
+	}
+	sort_dirs(behemoth, k);
 	return (1);
 }

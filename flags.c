@@ -75,29 +75,6 @@ int	print_nonexistant(char **nonexistant)
 		print_invalid(nonexistant[i++]);
 	return (1);
 }
-//creates linked lists of the provided directories' contents
-int	init_directories(char **directories, ls **behemoth)
-{
-	int	i;
-	int j;
-	int	k;
-
-	i = 0;
-	if (directories[0] == NULL)
-		return (0);
-	while (behemoth[i] != NULL)
-		i++;
-	k = i;
-	j = 0;
-	while (directories[j] != NULL)
-	{
-		behemoth[i] = init_list(directories[j]);
-		i++;
-		j++;
-	}
-	sort_dirs(behemoth, k);
-	return (1);
-}
 
 //initializes the containers
 int	init(char **nonexistant, char **files, char **directories, ls **behemoth)
