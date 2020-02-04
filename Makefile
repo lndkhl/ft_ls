@@ -1,7 +1,7 @@
 INCL = tinker.h
 CC = gcc -g
 FLAGS = -Wall -Werror -Wextra
-NAME = tinker
+NAME = ft_ls
 PESKY = tinker.h.gch
 LPATH = -L./libft
 LIB = -lft

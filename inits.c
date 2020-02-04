@@ -105,8 +105,8 @@ int init_directories(char **directories, ls **behemoth)
 	while (directories[j] != NULL)
 	{
 		behemoth[i] = init_list(directories[j]);
-		i++;
-		j++;
+		++i;
+		++j;
 	}
 	sort_dirs(behemoth, k);
 	return (1);
