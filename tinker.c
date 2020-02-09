@@ -13,7 +13,7 @@
 #include "tinker.h"
 
 //appends node (param1) to linked list (param2)
-ls    	*add_node(ls *node, ls *list)
+ls    	*add_node(ls *node, ls *list, int *flags)
 {
 	ls	*crsr;
 
@@ -25,10 +25,12 @@ ls    	*add_node(ls *node, ls *list)
 	if (!(list))
 	{
 		list = node;
-		list->total = node->stat_buff->st_blocks;
+		if (node->name[0] != '.' || (*flags & 2))
+			list->total = node->stat_buff->st_blocks;
 		return (list);
 	}
-	list->total += node->stat_buff->st_blocks;
+	if (node->name[0] != '.' || (*flags & 2))
+		list->total += node->stat_buff->st_blocks;
 	crsr = seek_end(list);
 	crsr->next = node;
 	node->prev = crsr;

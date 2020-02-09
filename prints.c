@@ -94,7 +94,7 @@ ls	*print_rec(ls *list, int type, int *flags)
 				ft_putchar('\n');
 				ft_putstr(crsr->abs_path);
 				ft_putstr(":\n");
-				print_rec(init_list(crsr->abs_path), type, flags);
+				print_rec(init_list(crsr->abs_path, flags), type, flags);
 			}
 			crsr = crsr->next;
 		}

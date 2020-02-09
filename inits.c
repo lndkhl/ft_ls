@@ -39,7 +39,7 @@ ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 }
 
 //initializes a list of the files in a given directory
-ls	*init_list(const char *path)
+ls	*init_list(const char *path, int *flags)
 {
 	DIR     		*d;
 	ls				*list;
@@ -55,7 +55,7 @@ ls	*init_list(const char *path)
 	while ((dir_struct = readdir(d)))
 	{
 		appended = p_append(path, dir_struct->d_name);
-		list = add_node((init_ls_node(dir_struct->d_name, path, appended)), list);
+		list = add_node((init_ls_node(dir_struct->d_name, path, appended)), list, flags);
 		ft_strdel(&appended);
 	}
 	closedir(d);
@@ -63,11 +63,11 @@ ls	*init_list(const char *path)
 }
 
 //initializes the directory from which the function is called
-ls	*init_cwd()
+ls	*init_cwd(int *flags)
 {
 	ls	*cwd;
 
-	return (cwd = init_list("."));
+	return (cwd = init_list(".", flags));
 }
 
 //initializes the nodes corresponding to requested filename
@@ -89,7 +89,7 @@ int	init_files(char **files, ls **behemoth)
 	return (1);
 }
 //creates linked lists of the provided directories' contents
-int init_directories(char **directories, ls **behemoth)
+int init_directories(char **directories, ls **behemoth, int *flags)
 {
 	int i;
 	int j;
@@ -104,7 +104,7 @@ int init_directories(char **directories, ls **behemoth)
 	j = 0;
 	while (directories[j] != NULL)
 	{
-		behemoth[i] = init_list(directories[j]);
+		behemoth[i] = init_list(directories[j], flags);
 		++i;
 		++j;
 	}

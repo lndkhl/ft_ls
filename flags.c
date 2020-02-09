@@ -48,6 +48,7 @@ int	parse(char **av, char **directories, char **files, char **nonexistant)
 			push(nonexistant, append);
 		i++;
 	}
+	print_nonexistant(nonexistant);
 	return (1);
 }
 
@@ -89,19 +90,18 @@ int	print_nonexistant(char **nonexistant)
 }
 
 //initializes the containers
-int	init(char **nonexistant, char **files, char **directories, ls **behemoth)
+int	init(int *flags, char **files, char **directories, ls **behemoth)
 {
 	int i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	print_nonexistant(nonexistant);
 	i = init_files(files, behemoth);
-	j = init_directories(directories, behemoth);
+	j = init_directories(directories, behemoth, flags);
 	if (!i && !j)
 	{
-		behemoth[0] = init_cwd();
+		behemoth[0] = init_cwd(flags);
 		return (0);
 	}
 	return (1);

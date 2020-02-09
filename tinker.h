@@ -28,13 +28,13 @@ typedef struct              t_list
 
 //initializers (inits.c)
 ls		*init_ls_node(const char *name, const char *dir_name, const char *path);
-ls		*init_list(const char *path);
-ls		*init_cwd();
+ls		*init_list(const char *path, int *flags);
+ls		*init_cwd(int *flags);
 int		init_files(char **files, ls **behemoth);
-int		init_directories(char **directories, ls **behemoth);
+int		init_directories(char **directories, ls **behemoth, int *flags);
 
 //modifiers (tinker.c)
-ls		*add_node(ls *node, ls *list);
+ls		*add_node(ls *node, ls *list, int *flags);
 int		is_dir(ls *node);
 ls		*seek_end(ls *list);
 char	*p_append(const char *path, const char *name);
@@ -52,7 +52,7 @@ int		flag_check(char **av, int *flags);
 int		parse(char **av, char **directories, char **files, char **nonexistant);
 int		is_valid(char *av_i, int *flags);
 int		print_nonexistant(char **nonexistant);
-int		init(char **nonexistant, char **files, char **directories, ls **behemoth);
+int		init(int *flags, char **files, char **directories, ls **behemoth);
 
 //cleanup (cleans.c)
 void	clean(ls **list);

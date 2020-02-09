@@ -19,22 +19,21 @@ int	main(int ac, char **av)
 	static char		*files[L_MAX];
 	static char		*nonexistant[L_MAX];
 	static ls		*behemoth[L_MAX];
-	int				i;
 
-	flags = 0;
-	i = -1;
-	while (++i < L_MAX)
+	flags = -1;
+	while (++flags < L_MAX)
 	{
-		directories[i] = NULL;
-		files[i] = NULL;
-		nonexistant[i] = NULL;
-		behemoth[i] = NULL;
+		directories[flags] = NULL;
+		files[flags] = NULL;
+		nonexistant[flags] = NULL;
+		behemoth[flags] = NULL;
 	}
+	flags = 0;
 	if (ac > 1)
 		if (!flag_check(av, &flags))
 			return (0);
 	parse(av, directories, files, nonexistant);
-	init(nonexistant, files, directories, behemoth);
+	init(&flags, files, directories, behemoth);
 	print(behemoth, &flags);
 	clean_string(nonexistant);
 	clean_string(files);
