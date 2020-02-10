@@ -25,6 +25,6 @@ int	main(int ac, char **av)
 	behemoth = parse(av, &flags, behemoth);
 	print(behemoth, &flags);
 	clean(behemoth, &flags);
-	//sleep(30);
+	sleep(30);
 	return (0);
 }

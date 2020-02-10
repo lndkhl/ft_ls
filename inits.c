@@ -54,13 +54,13 @@ t_ls	*init_list(const char *path, int *flags)
 		perror("error");
 		return (NULL);
 	}
-	ft_strdel(&appended);
+	free(appended);
 	while ((dir_struct = readdir(d)))
 	{
 		appended = p_append(path, dir_struct->d_name);
 		list = add_node((init_ls_node(dir_struct->d_name, path, appended)),\
 			list, flags);
-		ft_strdel(&appended);
+		free(appended);
 	}
 	closedir(d);
 	return (list);

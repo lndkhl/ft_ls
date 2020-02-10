@@ -102,6 +102,7 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 			}
 			crsr = crsr->next;
 		}
+		clean_reg(temp);
 	}
 	return (temp);
 }
