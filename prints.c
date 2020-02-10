@@ -13,7 +13,7 @@
 #include "tinker.h"
 
 //prints the filename associated with a given node
-int	print_node(ls *node, int *flags)
+int	print_node(t_ls *node, int *flags)
 {
 	if (!(node))
 		return (-1);
@@ -22,33 +22,34 @@ int	print_node(ls *node, int *flags)
 }
 
 //prints the list via one of the print_node functions
-int	print(ls **behemoth, int *flags)
+int	print(t_lust *behemoth, int *flags)
 {
-	int	i;
-	int	type;
+	t_lust	*crsr;
+	int		type;
 
-	i = -1;
-	while (behemoth[++i] != NULL)
+	crsr = behemoth;
+	while (crsr)
 	{
-		if (i)
+		if (crsr->prev)
 			ft_putchar('\n');
 		type = (*flags & 16) ? 1 : 0;
-		behemoth[i] = sort(behemoth[i], type);
+		crsr->list = sort(crsr->list, type);
 		if (*flags & 1 && (!(*flags & 8)))
-			print_titles(behemoth[i]);
+			print_titles(crsr->list);
 		if (*flags & 8)
-			print_rec(behemoth[i], type, flags);
+			print_rec(crsr->list, type, flags);
 		else 
-			print_basic(behemoth[i], flags);
+			print_basic(crsr->list, flags);
+		crsr = crsr->next;
 	}
 	return (0);
 }
 
 //prints each node according to the desired formatting
-int	print_basic(ls *node, int *flags)
+int	print_basic(t_ls *node, int *flags)
 {
-	ls	*temp;
-	
+	t_ls	*temp;
+
 	temp = NULL;
 	if (!(temp = node))
 		return (-1);
@@ -75,16 +76,19 @@ int	print_basic(ls *node, int *flags)
 }
 
 //prints recursively
-ls	*print_rec(ls *list, int type, int *flags)
+t_ls	*print_rec(t_ls *list, int type, int *flags)
 {
-	ls	*temp;
-	ls	*crsr;
+	t_ls	*temp;
+	t_ls	*crsr;
 
 	temp = list;
 	if ((crsr = temp))
 	{
-		ft_putstr("total ");
-		ft_putnbr(crsr->total);
+		if (*flags & 1 && !(*flags & 8))
+		{
+			ft_putstr("total ");
+			ft_putnbr(crsr->total);
+		}
 		ft_putchar('\n');
 		print_basic(sort(crsr, type), flags);
 		while (crsr)
@@ -99,11 +103,11 @@ ls	*print_rec(ls *list, int type, int *flags)
 			crsr = crsr->next;
 		}
 	}
-	clean_one(temp);
+	//clean_one(temp);
 	return (temp);
 }
 
-int	print_titles(ls *node)
+int	print_titles(t_ls *node)
 {	
 	if (!node)
 		return (0);

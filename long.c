@@ -13,7 +13,7 @@
 #include "tinker.h"
 
 //prints file permissions
-int		print_permissions(ls *node)
+int		print_permissions(t_ls *node)
 {
 	char	*perms;
 
@@ -24,7 +24,7 @@ int		print_permissions(ls *node)
 	}
 	perms = ls_perms(node->stat_buff->st_mode);
 	if (perms[0] == 'l')
-		readlink(node->abs_path, node->link_buff, L_MIN);
+		readlink(node->abs_path, node->link_buff, L_MAX);
 	ft_putstr(perms);
 	free(perms);
 	ft_putstr("  ");
@@ -32,7 +32,7 @@ int		print_permissions(ls *node)
 }
 
 //prints user
-int		print_user(ls *node)
+int		print_user(t_ls *node)
 {
 	struct passwd	*pwuid;
 	struct group	*gid;
@@ -58,7 +58,7 @@ int		print_user(ls *node)
 }
 
 //prints file size
-int		print_size(ls *node)
+int		print_size(t_ls *node)
 {
 	int	buffer;
 	int	size;
@@ -86,7 +86,7 @@ int		print_size(ls *node)
 }
 
 //prints last modification date
-int		print_date_modded(ls *node)
+int		print_date_modded(t_ls *node)
 {
 	char	*shorter;
 

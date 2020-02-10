@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   flags_helps.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 17:23:12 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/03 17:23:19 by lnkambul         ###   ########.fr       */
+/*   Created: 2020/02/10 07:11:25 by lnkambul          #+#    #+#             */
+/*   Updated: 2020/02/10 08:17:08 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-int	main(int ac, char **av)
+t_lust	*add_dir(t_lust *node, t_lust *list)
 {
-	int			flags;
-	t_lust		*behemoth;
+	t_lust	*crsr;
 
-	flags = 0;
-	if (ac > 1)
-		if (!flag_check(av, &flags))
-			return (0);
-	behemoth = NULL;
-	behemoth = parse(av, &flags, behemoth);
-	print(behemoth, &flags);
-	//clean_string(nonexistant);
-	//clean_string(files);
-	//clean_string(directories);
-	//sleep(30);
-	return (0);
+	if (!(node))
+		return (list);
+	if (!(list))
+	{
+		list = (t_lust *)malloc(sizeof(t_lust));
+		list = node;
+		return (list);
+	}
+	crsr = list;
+	while (crsr->next)
+		crsr = crsr->next;
+	crsr->next = node;
+	node->prev = crsr;
+	return (list);
 }

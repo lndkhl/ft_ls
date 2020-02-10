@@ -6,18 +6,18 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:55 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/03 17:24:56 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/10 08:17:16 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
 //initializes a node
-ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
+t_ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 {
-	ls		*node;
+	t_ls		*node;
 
-	if (!(node = (ls *)malloc(sizeof(ls))))
+	if (!(node = (t_ls *)malloc(sizeof(t_ls))))
 		return (NULL);;
 	if (name == NULL)
 		return (NULL);
@@ -29,7 +29,7 @@ ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 		node->dir_name = ft_strdup(dir_name);
 	else
 		node->dir_name = NULL;
-	ft_memset(node->link_buff, '\0', L_MIN);
+	ft_memset(node->link_buff, '\0', L_MAX);
 	if (lstat(node->abs_path, node->stat_buff) == -1)
 	{
 		perror("lstat at init");
@@ -39,13 +39,13 @@ ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 }
 
 //initializes a list of the files in a given directory
-ls	*init_list(const char *path, int *flags)
+t_ls	*init_list(const char *path, int *flags)
 {
 	DIR     		*d;
-	ls				*list;
+	t_ls			*list;
 	struct dirent	*dir_struct;
 	char			*appended;
-
+	
 	list = NULL;
 	appended = ((path[0] == '/') || (path[0] == '~') == 0) \
 	? ft_strdup(path) : p_append(".", path);
@@ -55,7 +55,8 @@ ls	*init_list(const char *path, int *flags)
 	while ((dir_struct = readdir(d)))
 	{
 		appended = p_append(path, dir_struct->d_name);
-		list = add_node((init_ls_node(dir_struct->d_name, path, appended)), list, flags);
+		list = add_node((init_ls_node(dir_struct->d_name, path, appended)),\
+			list, flags);
 		ft_strdel(&appended);
 	}
 	closedir(d);
@@ -63,51 +64,57 @@ ls	*init_list(const char *path, int *flags)
 }
 
 //initializes the directory from which the function is called
-ls	*init_cwd(int *flags)
+t_ls	*init_cwd(int *flags)
 {
-	ls	*cwd;
+	t_ls	*cwd;
 
 	return (cwd = init_list(".", flags));
 }
 
 //initializes the nodes corresponding to requested filename
-int	init_files(char **files, ls **behemoth)
+t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 {
-	int		i;
-	int 	j;
 	char	*dir_name;
+	t_cont	*crsr;
+	t_ls	*list;
 
 	dir_name = NULL;
-	i = 0;
-	if (!(files[0]))
-		return (0);
-	while (behemoth[i] != NULL)
-		i++;
-	j = -1;
-	while (files[++j] != NULL)
-		behemoth[i++] =  init_ls_node(files[j], dir_name, files[j]);
-	return (1);
+	if (!(files))
+		return (NULL);
+	crsr = files;
+	behemoth = (t_lust *)malloc(sizeof(t_lust));
+	list = init_ls_node(crsr->name, dir_name, crsr->name);;
+	while (crsr->next)
+	{
+		crsr = crsr->next;
+		list = add_node(init_ls_node(crsr->name, dir_name, crsr->name)\
+			, list, flags);
+	}
+	behemoth->list = list;
+	behemoth->prev = NULL;
+	behemoth->next = NULL;
+	return (behemoth);
 }
 //creates linked lists of the provided directories' contents
-int init_directories(char **directories, ls **behemoth, int *flags)
+t_lust *init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 {
-	int i;
-	int j;
-	int k;
+	t_cont	*crsr;
+	t_ls	*list;
+	t_lust	*temp;
 
-	 i = 0;
-	if (directories[0] == NULL)
-		return (0);
-	while (behemoth[i] != NULL)
-		i++;
-	k = i;
-	j = 0;
-	while (directories[j] != NULL)
+	if (!(directories))
+		return (behemoth);
+	crsr = directories;
+	while (crsr)
 	{
-		behemoth[i] = init_list(directories[j], flags);
-		++i;
-		++j;
+		temp = (t_lust *)malloc(sizeof(t_lust));
+		temp->next = NULL;
+		temp->prev = NULL;
+		list = init_list(crsr->name, flags);
+		temp->list = list;
+		behemoth = add_dir(temp, behemoth);
+		temp = NULL;
+		crsr = crsr->next;
 	}
-	sort_dirs(behemoth, k);
-	return (1);
+	return (behemoth);
 }

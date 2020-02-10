@@ -11,73 +11,90 @@
 #include <sys/xattr.h>
 #include <time.h>
 
-#define L_MAX 20480
-#define L_MIN 128
+#define L_MAX 2048
 
-typedef struct              t_list
+typedef struct              d_list
 {
-		struct t_list		*next;
-		struct t_list		*prev;
+		struct d_list		*next;
+		struct d_list		*prev;
 		struct stat			stat_buff[L_MAX];
 		char				*name;
 		char				*dir_name;
 		char				*abs_path;
-		char				link_buff[L_MIN];
+		char				link_buff[L_MAX];
 		blkcnt_t			total;
-}                           ls;
+}                           t_ls;
+
+typedef struct				f_list
+{
+	t_ls					*list;
+	struct f_list			*next;
+	struct f_list			*prev;
+}							t_lust;				
+
+
+typedef struct				s_container
+{
+		struct s_container	*next;
+		struct s_container	*prev;
+		char				*name;
+}							t_cont;
 
 //initializers (inits.c)
-ls		*init_ls_node(const char *name, const char *dir_name, const char *path);
-ls		*init_list(const char *path, int *flags);
-ls		*init_cwd(int *flags);
-int		init_files(char **files, ls **behemoth);
-int		init_directories(char **directories, ls **behemoth, int *flags);
+t_ls	*init_ls_node(const char *name, const char *dir_name, const char *path);
+t_ls	*init_list(const char *path, int *flags);
+t_ls	*init_cwd(int *flags);
+t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags);
+t_lust	*init_directories(t_cont *directories, t_lust *behemoth, int *flags);
 
 //modifiers (tinker.c)
-ls		*add_node(ls *node, ls *list, int *flags);
-int		is_dir(ls *node);
-ls		*seek_end(ls *list);
+t_ls	*add_node(t_ls *node, t_ls *list, int *flags);
+int		is_dir(t_ls *node);
+t_ls	*seek_end(t_ls *list);
 char	*p_append(const char *path, const char *name);
-ls		*sort(ls *list, int type);
+t_ls	*sort(t_ls *list, int type);
 
 //printers (prints.c)
-int		print_node(ls *node, int *flags);
-int		print(ls **list, int *flags);
-ls		*print_rec(ls *list, int type, int *flags);
-int		print_basic(ls *node, int *flags);
-int		print_titles(ls *node);
+int		print_node(t_ls *node, int *flags);
+int		print(t_lust *list, int *flags);
+t_ls	*print_rec(t_ls *list, int type, int *flags);
+int		print_basic(t_ls *node, int *flags);
+int		print_titles(t_ls *node);
 
 //pre-wash (flags.c)
 int		flag_check(char **av, int *flags);
-int		parse(char **av, char **directories, char **files, char **nonexistant);
+t_lust	*parse(char **av, int *flags, t_lust *behemoth);
 int		is_valid(char *av_i, int *flags);
-int		print_nonexistant(char **nonexistant);
-int		init(int *flags, char **files, char **directories, ls **behemoth);
+int		print_nonexistant(t_cont *nonexistant);
+t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth);
 
 //cleanup (cleans.c)
-void	clean(ls **list);
-void	clean_one(ls *head);
-void	clean_string(char **string);
+void	clean(t_lust *list);
+void	clean_one(t_ls *head);
+void	clean_string(t_cont *string);
 int 	filetypeletter(int mode);
 
 //helpers (helpers.c)
 int		is_d(char *name);
 int		is_file(char *name);
-int		push(char **container, char *item);
-int		print_invalid(char *nonexistant);
+t_cont	*push(t_cont *container, char *item);
+int		print_invalid(t_cont *nonexistant);
 int		print_illegal(char c);
 
 //long-print (long.c)
-int		print_permissions(ls *node);
-int		print_user(ls *node);
-int		print_size(ls *node);
-int		print_date_modded(ls *node);
+int		print_permissions(t_ls *node);
+int		print_user(t_ls *node);
+int		print_size(t_ls *node);
+int		print_date_modded(t_ls *node);
 char 	*ls_perms(int mode);
 
 //sort (sorts.c)
-ls		*sorter(ls *list, ls *head, int type);
-int		count_nodes(ls *temp);
-ls		*compare(ls *head, ls *temp, int type);
-ls		*update_sort(ls *sort, ls *head);
-void	sort_dirs(ls **behemoth, int index);
+t_ls	*sorter(t_ls *list, t_ls *head, int type);
+int		count_nodes(t_ls *temp);
+t_ls	*compare(t_ls *head, t_ls *temp, int type);
+t_ls	*update_sort(t_ls *sort, t_ls *head);
+void	sort_dirs(t_cont *directories);
+
+/*helper functions for flags*/
+t_lust	*add_dir(t_lust *node, t_lust *list);
 #endif

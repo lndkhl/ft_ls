@@ -36,29 +36,46 @@ int		is_file(char *name)
 }
 
 //appends a filename to an array
-int		push(char **container, char *item)
+t_cont	*push(t_cont *container, char *item)
 {
-	int	i;
+	t_cont	*temp;
+	t_cont	*crsr;
 
-	i = 0;
 	if (!item)
+		return (NULL);
+	temp = (t_cont *)malloc(sizeof(t_cont));
+	temp->name = ft_strdup(item);
+	temp->next = NULL;
+	if (!(container))
 	{
-		perror("push");
-		return (-1);
+		temp->prev = NULL;
+		container = temp;
+		return (container);
 	}
-	while (container[i] != NULL && i < L_MAX)
-		i++;
-	container[i] = item;
-	return (1);
+	crsr = container;
+	while (crsr->next)
+		crsr = crsr->next;
+	crsr->next = temp;
+	temp->prev = crsr;
+	return (container);
 }
 
 //prints that an invalid filename has been entered
-int		print_invalid(char *nonexistant)
+int		print_invalid(t_cont *nonexistant)
 {
-	ft_putstr("ft_ls: ");
-	ft_putstr(nonexistant);
-	ft_putendl(": No such file or directory");
-	return (0);
+	t_cont	*temp;
+
+	if (!(nonexistant))
+		return (0);
+	temp = nonexistant;
+	while (temp)
+	{
+		ft_putstr("ft_ls: ");
+		ft_putstr(nonexistant->name);
+		ft_putendl(": No such file or directory");
+		temp = temp->next;
+	}
+	return (1);
 }
 
 //prints that an illegal option has been chosen, terminates

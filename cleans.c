@@ -12,20 +12,21 @@
 
 #include "tinker.h"
 
-void	clean(ls **list)
+void	clean(t_lust *list)
 {
-	ls	*crsr;
-	int	i;
+	t_lust	*crsr;
 
-	i = -1;
-	while ((crsr = list[++i]))
-		clean_one(crsr);
-	return ;
+	crsr = list;
+	while (crsr)
+	{
+		clean_one(crsr->list);
+		crsr = crsr->next;
+	}
 }
 
-void	clean_one(ls *head)
+void	clean_one(t_ls *head)
 {
-	ls	*temp;
+	t_ls	*temp;
 
 	if (!(temp = head))
 		return ;
@@ -36,20 +37,19 @@ void	clean_one(ls *head)
 		ft_strdel(&(temp->dir_name));
 		temp = temp->next;
 	}
-	return ;
 }
 
-void	clean_string(char **string)
+void	clean_string(t_cont *cont)
 {
-	char *crsr;
-	int		i;
+	t_cont 	*crsr;
 
-	i = 0;
-	if (!(string[i]))
+	if (!(cont))
 		return ;
-	while ((crsr = string[i++]))
-		ft_strdel(&crsr);
-	return ;
+	while ((crsr = cont))
+	{
+		ft_strdel(&(crsr->name));
+		crsr = crsr->next;
+	}
 }
 
 int		filetypeletter(int mode)
