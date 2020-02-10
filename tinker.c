@@ -13,9 +13,9 @@
 #include "tinker.h"
 
 //appends node (param1) to linked list (param2)
-ls    	*add_node(ls *node, ls *list, int *flags)
+t_ls    	*add_node(t_ls *node, t_ls *list, int *flags)
 {
-	ls	*crsr;
+	t_ls	*crsr;
 
 	if(!(node))
 	{
@@ -38,7 +38,7 @@ ls    	*add_node(ls *node, ls *list, int *flags)
 }
 
 //determines if a given node is a directory
-int	is_dir(ls *node)
+int	is_dir(t_ls *node)
 {
 	if (!(node))
 	{
@@ -53,9 +53,9 @@ int	is_dir(ls *node)
 }
 
 //returns the last node in a given linked list
-ls		*seek_end(ls *list)
+t_ls		*seek_end(t_ls *list)
 {
-	ls	*temp;
+	t_ls	*temp;
 
 	if(!(list))
 		return (NULL);
@@ -83,11 +83,11 @@ char		*p_append(const char *path, const char *name)
 }
 
 //sorts list by last modification date and time
-ls      *sort(ls *list, int type)
+t_ls      *sort(t_ls *list, int type)
 {
-	ls  *temp;
-	ls  *sort;
-	ls  *head;
+	t_ls  *temp;
+	t_ls  *sort;
+	t_ls  *head;
 	int j;
 
 	sort = NULL;

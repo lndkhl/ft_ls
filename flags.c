@@ -27,29 +27,37 @@ int	flag_check(char **av, int *flags)
 	return (1);
 }
 
-//populates the directories and files arrays in main
-int	parse(char **av, char **directories, char **files, char **nonexistant)
+//populates the directories and files lists
+t_lust	*parse(char **av, int *flags, t_lust *behemoth)
 {
-	int	i;
-	char *append;
+	int		i;
+	char 	*append;
+	t_cont	*nonexistant;
+	t_cont	*directories;
+	t_cont	*files;
 	
 	i = 1;
 	append = NULL;
+	nonexistant = NULL;
+	directories = NULL;
+	files = NULL;
 	while (av[i] != NULL && av[i][0] == '-')
 		i++;
 	while (av[i] != NULL)
 	{
 		append = ft_strdup(av[i]);
 		if (is_d(append))
-			push(directories, append);
+			directories = push(directories, append);
 		else if (is_file(append))
-			push(files, append);
+			files = push(files, append);
 		else
-			push(nonexistant, append);
+			nonexistant = push(nonexistant, append);
 		i++;
 	}
-	print_nonexistant(nonexistant);
-	return (1);
+	if (print_nonexistant(nonexistant) && (!files && !directories))
+		return (NULL);;
+	behemoth = init(flags, files, directories, behemoth);
+	return (behemoth);
 }
 
 //checks the validity of flags
@@ -77,32 +85,33 @@ int	is_valid(char *av_i, int *flags)
 }
 
 //creates linked list of files not found
-int	print_nonexistant(char **nonexistant)
+int	print_nonexistant(t_cont *nonexistant)
 {
-	int	i;
+	t_cont	*temp;
 
-	i = 0;
-	if (nonexistant[i] == NULL)
+	if (nonexistant == NULL)
 		return (0);
-	while (nonexistant[i] != NULL)
-		print_invalid(nonexistant[i++]);
+	temp = nonexistant;
+	while (temp != NULL)
+	{
+		print_invalid(temp);
+		temp = temp->next;
+	}
 	return (1);
 }
 
 //initializes the containers
-int	init(int *flags, char **files, char **directories, ls **behemoth)
+t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
 {
-	int i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	i = init_files(files, behemoth);
-	j = init_directories(directories, behemoth, flags);
-	if (!i && !j)
+	behemoth = init_files(files, behemoth, flags);
+	behemoth = init_directories(directories, behemoth, flags);
+	if (!(behemoth))
 	{
-		behemoth[0] = init_cwd(flags);
-		return (0);
+		behemoth = (t_lust *)malloc(sizeof(t_lust));
+		behemoth->list = init_cwd(flags);
+		behemoth->prev = NULL;
+		behemoth->next = NULL;
+		return (behemoth);
 	}
-	return (1);
+	return (behemoth);
 }

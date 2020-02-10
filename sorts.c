@@ -12,9 +12,9 @@
 
 #include "tinker.h"
 
-int		count_nodes(ls *temp)
+int		count_nodes(t_ls *temp)
 {
-	ls	*crsr;
+	t_ls	*crsr;
 	int	j;
 
 	j = 0;
@@ -28,13 +28,15 @@ int		count_nodes(ls *temp)
 }
 
 
-ls		*compare(ls *head, ls *temp, int type)
+t_ls	*compare(t_ls *head, t_ls *temp, int type)
 {
 	if (type == 1)
 	{
 		if (head->stat_buff->st_mtime < temp->stat_buff->st_mtime)
 				return (temp);
-		else if (head->stat_buff->st_mtime == temp->stat_buff->st_mtime && head->stat_buff->st_mtimespec.tv_nsec < temp->stat_buff->st_mtimespec.tv_nsec)
+		else if (head->stat_buff->st_mtime == temp->stat_buff->st_mtime &&\
+			head->stat_buff->st_mtimespec.tv_nsec <\
+				temp->stat_buff->st_mtimespec.tv_nsec)
 				return (temp);
 		return (head);
 	}
@@ -48,9 +50,9 @@ ls		*compare(ls *head, ls *temp, int type)
 		return (NULL);
 }
 
-ls		*update_sort(ls *sort, ls *head)
+t_ls	*update_sort(t_ls *sort, t_ls *head)
 {
-	ls	*temp;
+	t_ls	*temp;
 
 	temp = NULL;
 		if (!(temp = seek_end(sort)))
@@ -68,21 +70,21 @@ ls		*update_sort(ls *sort, ls *head)
 	return (sort);
 }
 
-void	sort_dirs(ls **behemoth, int index)
+void	sort_dirs(t_cont *directories)
 {
-	int	i;
-	ls	*temp;
-	ls	*crsr;
+	t_cont	*temp;
+	t_cont	*crsr;
+	t_cont	*swap;
 
-	while ((temp = behemoth[index]))
+	while ((temp = directories))
 	{
-		i = index;
-		while ((crsr = behemoth[++i]))
-			if (ft_strcmp(temp->dir_name, crsr->dir_name) > 0)
+		crsr = directories->next;
+		while (crsr)
+			if (ft_strcmp(temp->name, crsr->name) > 0)
 			{
-				behemoth[index] = crsr;
-				behemoth[i] = temp;
+				swap = temp;
+				crsr = crsr->next;
 			}
-			index++;
+		temp = temp->next;
 	}
 }
