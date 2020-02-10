@@ -6,7 +6,7 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:55 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/03 17:24:56 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/10 08:17:16 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,23 +104,16 @@ t_lust *init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 
 	if (!(directories))
 		return (behemoth);
-	ft_putendl("wacky");
-	if (behemoth)
-		behemoth->next = (t_lust *)malloc(sizeof(t_lust));
 	crsr = directories;
-	list = (t_ls *)malloc(sizeof(t_ls));
-	temp = (behemoth) ? behemoth->next : behemoth;
-	temp->prev = (behemoth) ? behemoth : NULL;
 	while (crsr)
 	{
+		temp = (t_lust *)malloc(sizeof(t_lust));
+		temp->next = NULL;
+		temp->prev = NULL;
 		list = init_list(crsr->name, flags);
 		temp->list = list;
-		temp->next = (t_lust *)malloc(sizeof(t_lust));
-		if (crsr->next)
-			temp->next->prev = temp;
-		else
-			temp->next = NULL;
-		temp = temp->next;
+		behemoth = add_dir(temp, behemoth);
+		temp = NULL;
 		crsr = crsr->next;
 	}
 	return (behemoth);

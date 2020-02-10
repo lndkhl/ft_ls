@@ -6,7 +6,8 @@ PESKY = tinker.h.gch
 LPATH = -L./libft
 LIB = -lft
 OBJ = $(CF:.c=.o)
-CF = tinker.c main.c cleans.c inits.c prints.c flags.c helpers.c long.c sorts.c
+CF = tinker.c main.c cleans.c inits.c prints.c flags.c helpers.c long.c\
+	 sorts.c flags_helps.c
 RM = rm -f
 
 $(NAME): $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:36 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/03 17:24:38 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/10 07:36:10 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ t_ls    	*add_node(t_ls *node, t_ls *list, int *flags)
 	t_ls	*crsr;
 
 	if(!(node))
-	{
-		perror("add_node");
-		return(NULL);
-	}
+		return(list);
 	if (!(list))
 	{
 		list = node;

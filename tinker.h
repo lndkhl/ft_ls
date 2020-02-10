@@ -94,4 +94,7 @@ int		count_nodes(t_ls *temp);
 t_ls	*compare(t_ls *head, t_ls *temp, int type);
 t_ls	*update_sort(t_ls *sort, t_ls *head);
 void	sort_dirs(t_cont *directories);
+
+/*helper functions for flags*/
+t_lust	*add_dir(t_lust *node, t_lust *list);
 #endif
