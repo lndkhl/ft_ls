@@ -32,7 +32,7 @@ t_ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 	ft_memset(node->link_buff, '\0', L_MAX);
 	if (lstat(node->abs_path, node->stat_buff) == -1)
 	{
-		perror("lstat at init");
+		perror("error");
 		return(NULL);
 	}
 	return (node);
@@ -50,7 +50,10 @@ t_ls	*init_list(const char *path, int *flags)
 	appended = ((path[0] == '/') || (path[0] == '~') == 0) \
 	? ft_strdup(path) : p_append(".", path);
 	if (!(d = opendir(appended)))
+	{
+		perror("error");
 		return (NULL);
+	}
 	ft_strdel(&appended);
 	while ((dir_struct = readdir(d)))
 	{

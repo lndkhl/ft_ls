@@ -24,9 +24,7 @@ int	main(int ac, char **av)
 	behemoth = NULL;
 	behemoth = parse(av, &flags, behemoth);
 	print(behemoth, &flags);
-	//clean_string(nonexistant);
-	//clean_string(files);
-	//clean_string(directories);
+	clean(behemoth, &flags);
 	//sleep(30);
 	return (0);
 }

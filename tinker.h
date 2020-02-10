@@ -69,9 +69,10 @@ int		print_nonexistant(t_cont *nonexistant);
 t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth);
 
 //cleanup (cleans.c)
-void	clean(t_lust *list);
-void	clean_one(t_ls *head);
-void	clean_string(t_cont *string);
+void	clean(t_lust *list, int *flags);
+t_ls	*clean_reg(t_lust *list);
+t_ls	*clean_rec(t_lust *list);
+void	clean_cont(t_cont *cont);
 int 	filetypeletter(int mode);
 
 //helpers (helpers.c)

@@ -35,7 +35,7 @@ int		is_file(char *name)
 	return (0);
 }
 
-//appends a filename to an array
+//appends a list element to a container
 t_cont	*push(t_cont *container, char *item)
 {
 	t_cont	*temp;

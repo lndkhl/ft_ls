@@ -66,16 +66,20 @@ t_ls		*seek_end(t_ls *list)
 char		*p_append(const char *path, const char *name)
 {
 	char	*temp;
-	char	*slash;
 	char	*appended;
+	int		i;
 
+	i = 0;
 	if (!(path) || !(name))
 		return (NULL);
-	slash = ft_strdup("/");
-	temp = ft_strjoin(path, slash);
+	while (path[i] != '\0')
+		i++;
+	if (path[--i] != '/')
+		temp = ft_strjoin(path, "/");
+	else
+		temp = ft_strdup(path);
 	appended = ft_strjoin(temp, name);
 	free(temp);
-	free(slash);
 	return (appended);
 }
 

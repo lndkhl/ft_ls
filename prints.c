@@ -84,12 +84,12 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 	temp = list;
 	if ((crsr = temp))
 	{
-		if (*flags & 1 && !(*flags & 8))
+		if (*flags & 1)
 		{
 			ft_putstr("total ");
 			ft_putnbr(crsr->total);
+			ft_putchar('\n');
 		}
-		ft_putchar('\n');
 		print_basic(sort(crsr, type), flags);
 		while (crsr)
 		{
@@ -103,7 +103,6 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 			crsr = crsr->next;
 		}
 	}
-	//clean_one(temp);
 	return (temp);
 }
 

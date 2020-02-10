@@ -12,43 +12,77 @@
 
 #include "tinker.h"
 
-void	clean(t_lust *list)
+void	clean(t_lust *list, int *flags)
 {
 	t_lust	*crsr;
+	t_lust	*temp;
 
-	crsr = list;
+	if (!(crsr = list))
+		return ;
 	while (crsr)
 	{
-		clean_one(crsr->list);
-		crsr = crsr->next;
+		if (crsr->next)
+			temp = crsr->next;
+		else
+			temp = NULL;
+		if (*flags & 8)
+			crsr->list = clean_rec(crsr);
+		else
+			crsr->list = clean_reg(crsr); 
+		free(crsr->list);
+		free(crsr);
+		crsr = temp;
 	}
 }
 
-void	clean_one(t_ls *head)
+t_ls	*clean_reg(t_lust *list)
 {
 	t_ls	*temp;
+	t_ls	*crsr;
 
-	if (!(temp = head))
-		return ;
+	temp = list->list;
 	while (temp)
 	{
-		ft_strdel(&(temp->name));
-		ft_strdel(&(temp->abs_path));
-		ft_strdel(&(temp->dir_name));
-		temp = temp->next;
+		crsr = (temp->next) ? temp->next : NULL;
+		free(temp->name);
+		free(temp->dir_name);
+		free(temp->abs_path);
+		free(temp);
+		temp = crsr;
 	}
+	return (temp);
 }
 
-void	clean_string(t_cont *cont)
+t_ls	*clean_rec(t_lust *list)
+{
+	t_ls	*temp;
+	t_ls	*crsr;
+
+	temp = list->list;
+	while (temp)
+	{
+		crsr = (temp->next) ? temp->next : NULL;
+		
+	}
+	return (temp);
+}
+
+void	clean_cont(t_cont *cont)
 {
 	t_cont 	*crsr;
+	t_cont	*temp;
 
-	if (!(cont))
+	if (!(crsr = cont))
 		return ;
-	while ((crsr = cont))
+	while (crsr)
 	{
-		ft_strdel(&(crsr->name));
-		crsr = crsr->next;
+		if (crsr->next)
+			temp = crsr->next;
+		else
+			temp = NULL;
+		free(crsr->name);
+		free(crsr);
+		crsr = temp;
 	}
 }
 

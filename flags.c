@@ -37,22 +37,20 @@ t_lust	*parse(char **av, int *flags, t_lust *behemoth)
 	t_cont	*files;
 	
 	i = 1;
-	append = NULL;
 	nonexistant = NULL;
 	directories = NULL;
 	files = NULL;
 	while (av[i] != NULL && av[i][0] == '-')
 		i++;
-	while (av[i] != NULL)
+	while (av[i++] != NULL)
 	{
-		append = ft_strdup(av[i]);
+		append = ft_strdup(av[i - 1]);
 		if (is_d(append))
 			directories = push(directories, append);
 		else if (is_file(append))
 			files = push(files, append);
 		else
 			nonexistant = push(nonexistant, append);
-		i++;
 	}
 	if (print_nonexistant(nonexistant) && (!files && !directories))
 		return (NULL);;
@@ -97,6 +95,7 @@ int	print_nonexistant(t_cont *nonexistant)
 		print_invalid(temp);
 		temp = temp->next;
 	}
+	clean_cont(nonexistant);
 	return (1);
 }
 
@@ -113,5 +112,7 @@ t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
 		behemoth->next = NULL;
 		return (behemoth);
 	}
+	clean_cont(files);
+	clean_cont(directories);
 	return (behemoth);
 }
