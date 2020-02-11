@@ -12,6 +12,7 @@
 
 #include "tinker.h"
 
+/*frees dynamically allocated memory*/
 void	clean(t_lust *list, int *flags)
 {
 	t_lust	*crsr;
@@ -35,6 +36,7 @@ void	clean(t_lust *list, int *flags)
 	}
 }
 
+/*frees dynamically allocated memory within one linked list*/
 t_ls	*clean_reg(t_ls *list)
 {
 	t_ls	*temp;
@@ -52,31 +54,8 @@ t_ls	*clean_reg(t_ls *list)
 	}
 	return (temp);
 }
-/*
-t_ls	*clean_rec(t_ls *list)
-{
-	t_ls	*temp;
-	t_ls	*crsr;
 
-	temp = list;
-	while (temp)
-	{
-		crsr = (temp->next) ? temp->next : NULL;
-		if (ft_strcmp(temp->name, ".") && ft_strcmp(temp->name, "..")\
-			&& (temp->stat_buff->st_mode & S_IFMT) == S_IFDIR)
-			temp = clean_rec(temp);
-		if (temp)
-		{
-			free(temp->name);
-			free(temp->dir_name);
-			free(temp->abs_path);
-			free(temp);
-		}
-		temp = crsr;
-	}
-	return (temp);
-}
-*/
+/*frees dynamically allocated memory within the filename structs*/
 void	clean_cont(t_cont *cont)
 {
 	t_cont 	*crsr;
@@ -94,27 +73,4 @@ void	clean_cont(t_cont *cont)
 		free(crsr);
 		crsr = temp;
 	}
-}
-
-int		filetypeletter(int mode)
-{
-	char    c;
-
-	if (S_ISREG(mode))
-		c = '-';
-	else if (S_ISDIR(mode))
-		c = 'd';
-	else if (S_ISBLK(mode))
-		c = 'b';
-	else if (S_ISCHR(mode))
-		c = 'c';
-	else if (S_ISFIFO(mode))
-		c = 'p';
-	else if (S_ISLNK(mode))
-		c = 'l';
-	else if (S_ISSOCK(mode))
-		c = 's';
-	else
-		c = '?';
-	return(c);
 }

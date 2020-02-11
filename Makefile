@@ -7,7 +7,8 @@ LPATH = -L./libft
 LIB = -lft
 OBJ = $(CF:.c=.o)
 CF = tinker.c main.c cleans.c inits.c prints.c flags.c helpers.c long.c\
-	 sorts.c flags_helps.c
+	 sorts.c flags_helps.c inits_helps.c prints_helps.c sorts_helps.c\
+		more_prints.c tinker_helps.c long_helps.c
 RM = rm -f
 
 $(NAME): $(OBJ)

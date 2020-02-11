@@ -50,41 +50,32 @@ t_ls	*compare(t_ls *head, t_ls *temp, int type)
 		return (NULL);
 }
 
-t_ls	*update_sort(t_ls *sort, t_ls *head)
+/*sorts list according to type specified by type parameter*/
+t_ls      *sort(t_ls *list, int type)
 {
-	t_ls	*temp;
+	t_ls  *temp;
+	t_ls  *sort;
+	t_ls  *head;
+	int j;
 
-	temp = NULL;
-		if (!(temp = seek_end(sort)))
-		{
-			sort = head;
-			head->next = NULL;
-			head->prev = NULL;
-		}
-		else
-		{
-			temp->next = head;
-			head->next = NULL;
-			head->prev = temp;
-		}
-	return (sort);
-}
-
-void	sort_dirs(t_cont *directories)
-{
-	t_cont	*temp;
-	t_cont	*crsr;
-	t_cont	*swap;
-
-	while ((temp = directories))
+	sort = NULL;
+	j = count_nodes(list);
+	while ((list) && j--)
 	{
-		crsr = directories->next;
-		while (crsr)
-			if (ft_strcmp(temp->name, crsr->name) > 0)
-			{
-				swap = temp;
-				crsr = crsr->next;
-			}
-		temp = temp->next;
+		head = list;
+		temp = list->next;
+		while (temp)
+		{
+			head = compare(head, temp, type);
+			temp = temp->next;
+		}
+		if (head == list)
+			list = list->next;
+		else if (head->prev)
+			head->prev->next = head->next;
+		if (head->next)
+			head->next->prev = head->prev;
+		sort = update_sort(sort, head);
 	}
+	return (sort);
 }
