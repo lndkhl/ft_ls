@@ -14,21 +14,18 @@
 
 t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 {
-	char	*dir_name;
 	t_cont	*crsr;
 	t_ls	*list;
 
-	dir_name = NULL;
 	if (!(files))
 		return (NULL);
 	crsr = files;
 	behemoth = (t_lust *)malloc(sizeof(t_lust));
-	list = init_ls_node(crsr->name, dir_name, crsr->name);
+	list = init_ls_node(crsr->name, crsr->name);
 	while (crsr->next)
 	{
 		crsr = crsr->next;
-		list = add_node(init_ls_node(crsr->name, dir_name, crsr->name)\
-			, list, flags);
+		list = add_node(init_ls_node(crsr->name, crsr->name), list, flags);
 	}
 	behemoth->list = list;
 	behemoth->prev = NULL;

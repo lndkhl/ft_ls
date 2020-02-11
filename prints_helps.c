@@ -14,13 +14,12 @@
 
 t_ls	*print_rec(t_ls *list, int type, int *flags)
 {
-	t_ls	*temp;
 	t_ls	*crsr;
 
-	temp = NULL;
 	if ((crsr = list))
 	{
-		temp = crsr;
+		ft_putstr(crsr->abs_path);
+		ft_putstr(":\n");
 		if (*flags & 1)
 			print_total(crsr);
 		print_basic(sort(crsr, type), flags);
@@ -29,26 +28,21 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 			if (is_dir(crsr) && ((*flags & 2) || crsr->name[0] != '.'))
 			{
 				ft_putchar('\n');
-				ft_putstr(crsr->abs_path);
-				ft_putstr(":\n");
 				print_rec(init_list(crsr->abs_path, flags), type, flags);
 			}
 			crsr = crsr->next;
 		}
-		clean_reg(temp);
 	}
-	return (temp);
+	list = clean_reg(list);
+	return (list);
 }
 
 int		print_titles(t_ls *node)
 {
 	if (!node)
 		return (0);
-	if (node->dir_name)
-	{
-		ft_putstr(node->dir_name);
-		ft_putstr(":\n");
-	}
+	ft_putstr(node->abs_path);
+	ft_putstr(":\n");
 	print_total(node);
 	return (1);
 }

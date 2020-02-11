@@ -31,7 +31,6 @@ typedef struct			s_thing
 	struct s_thing		*prev;
 	struct stat			stat_buff[L_MAX];
 	char				*name;
-	char				*dir_name;
 	char				*abs_path;
 	char				link_buff[L_MAX];
 	blkcnt_t			total;
@@ -51,14 +50,13 @@ typedef struct			s_container
 	char				*name;
 }						t_cont;
 
-t_ls					*init_ls_node(const char *n, const char *d, \
-		const char *p);
+t_ls					*init_ls_node(const char *n, const char *p);
 t_ls					*init_list(const char *path, int *flags);
 t_ls					*init_cwd(int *flags);
 t_ls					*add_node(t_ls *node, t_ls *list, int *flags);
 char					*p_append(const char *path, const char *name);
 int						print_node(t_ls *node, int *flags);
-int						print(t_lust *list, int *flags);
+t_lust					*print(t_lust *list, int *flags);
 int						print_basic(t_ls *node, int *flags);
 int						flag_check(char **av, int *flags);
 t_lust					*parse(char **av, int *f, t_lust *b, t_cont *n);

@@ -12,7 +12,7 @@
 
 #include "tinker.h"
 
-int	print_node(t_ls *node, int *flags)
+int		print_node(t_ls *node, int *flags)
 {
 	if (!(node))
 		return (-1);
@@ -20,7 +20,7 @@ int	print_node(t_ls *node, int *flags)
 	return (1);
 }
 
-int	print(t_lust *behemoth, int *flags)
+t_lust	*print(t_lust *behemoth, int *flags)
 {
 	t_lust	*crsr;
 	int		type;
@@ -40,10 +40,10 @@ int	print(t_lust *behemoth, int *flags)
 			print_basic(crsr->list, flags);
 		crsr = crsr->next;
 	}
-	return (0);
+	return (behemoth);
 }
 
-int	print_basic(t_ls *node, int *flags)
+int		print_basic(t_ls *node, int *flags)
 {
 	t_ls	*temp;
 

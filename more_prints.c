@@ -14,18 +14,9 @@
 
 int		print_invalid(t_cont *nonexistant)
 {
-	t_cont	*temp;
-
-	if (!(nonexistant))
-		return (0);
-	temp = nonexistant;
-	while (temp)
-	{
-		ft_putstr("ft_ls: ");
-		ft_putstr(nonexistant->name);
-		ft_putendl(": No such file or directory");
-		temp = temp->next;
-	}
+	ft_putstr("ft_ls: ");
+	ft_putstr(nonexistant->name);
+	ft_putendl(": No such file or directory");
 	return (1);
 }
 

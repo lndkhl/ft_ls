@@ -25,7 +25,10 @@ int	main(int ac, char **av)
 	behemoth = NULL;
 	nonexistent = NULL;
 	behemoth = parse(av, &flags, behemoth, nonexistent);
-	print(behemoth, &flags);
+	if (!behemoth)
+		return 0;
+	behemoth = print(behemoth, &flags);
 	clean(behemoth, &flags);
+	sleep(30);
 	return (0);
 }

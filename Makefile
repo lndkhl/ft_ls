@@ -1,5 +1,5 @@
 INCL = tinker.h
-CC = gcc -g
+CC = gcc
 FLAGS = -Wall -Werror -Wextra
 NAME = ft_ls
 PESKY = tinker.h.gch
