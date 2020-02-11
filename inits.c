@@ -6,19 +6,18 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:55 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/10 08:17:16 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/11 08:31:58 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-//initializes a node
 t_ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 {
 	t_ls		*node;
 
 	if (!(node = (t_ls *)malloc(sizeof(t_ls))))
-		return (NULL);;
+		return (NULL);
 	if (name == NULL)
 		return (NULL);
 	node->next = NULL;
@@ -33,19 +32,18 @@ t_ls	*init_ls_node(const char *name, const char *dir_name, const char *path)
 	if (lstat(node->abs_path, node->stat_buff) == -1)
 	{
 		perror("error");
-		return(NULL);
+		return (NULL);
 	}
 	return (node);
 }
 
-//initializes a list of the files in a given directory
 t_ls	*init_list(const char *path, int *flags)
 {
-	DIR     		*d;
+	DIR				*d;
 	t_ls			*list;
 	struct dirent	*dir_struct;
 	char			*appended;
-	
+
 	list = NULL;
 	appended = ((path[0] == '/') || (path[0] == '~') == 0) \
 	? ft_strdup(path) : p_append(".", path);
@@ -66,7 +64,6 @@ t_ls	*init_list(const char *path, int *flags)
 	return (list);
 }
 
-//initializes the directory from which the function is called
 t_ls	*init_cwd(int *flags)
 {
 	t_ls	*cwd;

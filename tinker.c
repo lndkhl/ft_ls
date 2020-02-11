@@ -6,19 +6,18 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:36 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/10 07:36:10 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/11 08:47:40 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-/*appends node (param1) to linked list (param2)*/
-t_ls    	*add_node(t_ls *node, t_ls *list, int *flags)
+t_ls		*add_node(t_ls *node, t_ls *list, int *flags)
 {
 	t_ls	*crsr;
 
-	if(!(node))
-		return(list);
+	if (!(node))
+		return (list);
 	if (!(list))
 	{
 		list = node;
@@ -34,7 +33,6 @@ t_ls    	*add_node(t_ls *node, t_ls *list, int *flags)
 	return (list);
 }
 
-/*updates the absolute path variable of a node*/
 char		*p_append(const char *path, const char *name)
 {
 	char	*temp;

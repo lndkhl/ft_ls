@@ -6,13 +6,12 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:23 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/03 17:24:24 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/11 08:37:36 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-//prints the filename associated with a given node
 int	print_node(t_ls *node, int *flags)
 {
 	if (!(node))
@@ -21,7 +20,6 @@ int	print_node(t_ls *node, int *flags)
 	return (1);
 }
 
-//prints the list via one of the print_node functions
 int	print(t_lust *behemoth, int *flags)
 {
 	t_lust	*crsr;
@@ -38,14 +36,13 @@ int	print(t_lust *behemoth, int *flags)
 			print_titles(crsr->list);
 		if (*flags & 8)
 			print_rec(crsr->list, type, flags);
-		else 
+		else
 			print_basic(crsr->list, flags);
 		crsr = crsr->next;
 	}
 	return (0);
 }
 
-//prints each node according to the desired formatting
 int	print_basic(t_ls *node, int *flags)
 {
 	t_ls	*temp;

@@ -6,13 +6,12 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:09 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/03 17:24:12 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/11 08:34:24 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-//prints file permissions
 int		print_permissions(t_ls *node)
 {
 	char	*perms;
@@ -31,11 +30,11 @@ int		print_permissions(t_ls *node)
 	return (print_user(node));
 }
 
-//prints user
 int		print_user(t_ls *node)
 {
 	struct passwd	*pwuid;
 	struct group	*gid;
+
 	if (!(pwuid = getpwuid(node->stat_buff->st_uid)))
 	{
 		perror("print_user");
@@ -46,7 +45,7 @@ int		print_user(t_ls *node)
 		perror("print_group");
 		return (-1);
 	}
-	if ((node->stat_buff->st_nlink)/ 10 == 0)
+	if ((node->stat_buff->st_nlink) / 10 == 0)
 		ft_putchar(' ');
 	ft_putnbr(node->stat_buff->st_nlink);
 	ft_putstr("  ");
@@ -57,7 +56,6 @@ int		print_user(t_ls *node)
 	return (print_size(node));
 }
 
-//prints file size
 int		print_size(t_ls *node)
 {
 	int	buffer;

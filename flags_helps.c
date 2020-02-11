@@ -6,13 +6,12 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 07:11:25 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/10 08:17:08 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/11 08:27:40 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-/*appends directory node to linked list*/
 t_lust	*add_dir(t_lust *node, t_lust *list)
 {
 	t_lust	*crsr;
@@ -33,8 +32,7 @@ t_lust	*add_dir(t_lust *node, t_lust *list)
 	return (list);
 }
 
-/*checks the validity of flags*/
-int	is_valid(char *av_i, int *flags)
+int		is_valid(char *av_i, int *flags)
 {
 	int	i;
 
@@ -53,12 +51,11 @@ int	is_valid(char *av_i, int *flags)
 			*flags = *flags | 16;
 		else
 			return (print_illegal(av_i[i]));
-	}	
+	}
 	return (1);
 }
 
-/*creates linked list of files not found*/
-int	print_nonexistant(t_cont *nonexistant)
+int		print_nonexistant(t_cont *nonexistant)
 {
 	t_cont	*temp;
 

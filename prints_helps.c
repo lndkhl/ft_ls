@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_helps.c                                      :+:      :+:    :+:   */
+/*   prints_helps.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 07:10:18 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/10 07:10:23 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/11 08:41:44 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-//prints recursively
 t_ls	*print_rec(t_ls *list, int type, int *flags)
 {
 	t_ls	*temp;
@@ -23,11 +22,7 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 	{
 		temp = crsr;
 		if (*flags & 1)
-		{
-			ft_putstr("total ");
-			ft_putnbr(crsr->total);
-			ft_putchar('\n');
-		}
+			print_total(crsr);
 		print_basic(sort(crsr, type), flags);
 		while (crsr)
 		{
@@ -45,8 +40,8 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 	return (temp);
 }
 
-int	print_titles(t_ls *node)
-{	
+int		print_titles(t_ls *node)
+{
 	if (!node)
 		return (0);
 	if (node->dir_name)
@@ -54,6 +49,12 @@ int	print_titles(t_ls *node)
 		ft_putstr(node->dir_name);
 		ft_putstr(":\n");
 	}
+	print_total(node);
+	return (1);
+}
+
+int		print_total(t_ls *node)
+{
 	ft_putstr("total ");
 	ft_putnbr(node->total);
 	ft_putchar('\n');

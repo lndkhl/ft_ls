@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_helps.c                                       :+:      :+:    :+:   */
+/*   inits_helps.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 07:10:01 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/10 07:10:25 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/11 08:33:08 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-//initializes the nodes corresponding to requested filename
 t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 {
 	char	*dir_name;
@@ -24,7 +23,7 @@ t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 		return (NULL);
 	crsr = files;
 	behemoth = (t_lust *)malloc(sizeof(t_lust));
-	list = init_ls_node(crsr->name, dir_name, crsr->name);;
+	list = init_ls_node(crsr->name, dir_name, crsr->name);
 	while (crsr->next)
 	{
 		crsr = crsr->next;
@@ -37,8 +36,8 @@ t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 	clean_cont(files);
 	return (behemoth);
 }
-//creates linked lists of the provided directories' contents
-t_lust *init_directories(t_cont *directories, t_lust *behemoth, int *flags)
+
+t_lust	*init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 {
 	t_cont	*crsr;
 	t_ls	*list;
@@ -62,7 +61,6 @@ t_lust *init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 	return (behemoth);
 }
 
-/*initializes the containers*/
 t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
 {
 	behemoth = init_files(files, behemoth, flags);
