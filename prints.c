@@ -20,43 +20,50 @@ int		print_node(t_ls *node, int *flags)
 	return (1);
 }
 
-t_lust	*print(t_lust *behemoth, int *flags)
+void	print(t_ls *list, int *flags)
 {
-	t_lust	*crsr;
+	t_ls	*temp;
+	t_ls	*crsr;
 	int		type;
 
-	crsr = behemoth;
-	while (crsr)
+	if (!list)
+		return ;
+	crsr = NULL;
+	type = (*flags & 16) ? 1 : 0;
+	temp = sort(list, type);
+	print_basic(temp, flags);
+	if (*flags & 8)
 	{
-		if (crsr->prev)
-			ft_putchar('\n');
-		type = (*flags & 16) ? 1 : 0;
-		crsr->list = sort(crsr->list, type);
-		if (*flags & 1 && (!(*flags & 8)))
-			print_titles(crsr->list);
-		if (*flags & 8)
-			crsr->list = print_rec(crsr->list, type, flags);
-		else
-			print_basic(crsr->list, flags);
-		crsr = crsr->next;
+		while (temp)
+		{
+			if ((is_dir(temp)) && (temp->name[0] != '.' || (*flags & 2)))
+			{
+				if ((crsr = init_list(temp->abs_path, flags)))
+				{
+					ft_putchar('\n');
+					print(crsr, flags);
+				}
+			}
+			temp = temp->next;
+		}
 	}
-	return (behemoth);
+	clean_reg(list);
 }
 
-int		print_basic(t_ls *node, int *flags)
+void	print_basic(t_ls *node, int *flags)
 {
 	t_ls	*temp;
 
 	temp = NULL;
 	if (!(temp = node))
-		return (-1);
+		return ;
+	print_title(node, flags);
 	if (*flags & 4)
 	{
 		temp = seek_end(node);
 		while (temp)
 		{
-			if ((*flags & 2) || (temp)->name[0] != '.')
-				print_node(temp, flags);
+			print_node(temp, flags);
 			temp = temp->prev;
 		}
 	}
@@ -64,10 +71,8 @@ int		print_basic(t_ls *node, int *flags)
 	{
 		while (temp)
 		{
-			if ((*flags & 2) || (temp)->name[0] != '.')
-				print_node(temp, flags);
+			print_node(temp, flags);
 			temp = temp->next;
 		}
 	}
-	return (1);
 }

@@ -12,51 +12,43 @@
 
 #include "tinker.h"
 
-t_ls	*print_rec(t_ls *list, int type, int *flags)
+void	print_rec(t_ls *list, int type, int *flags)
 {
 	t_ls	*crsr;
-	t_ls	*temp;
 
 	if (!list)
-		return (list);
+		return ;
 	crsr = list;
-	temp = NULL;
-	ft_putstr(crsr->abs_path);
-	ft_putstr(":\n");
+	print_title(crsr, flags);
 	if (*flags & 1)
 		print_total(crsr);
 	print_basic(sort(crsr, type), flags);
 	while (crsr)
 	{
-		if (is_dir(crsr) && ((*flags & 2) || crsr->name[0] != '.'))
+		if (is_d(crsr->abs_path))
 		{
 			ft_putchar('\n');
-			if (crsr->prev)
-				crsr->prev->next = crsr->next;
-			else
-				list = crsr->next;
-			if (crsr->next)
-				crsr->next->prev = crsr->prev;
-			else if (crsr->prev)
-				crsr->prev->next = NULL;
-			temp = print_rec(init_list(crsr->abs_path, flags), type, flags);
-			temp = clean_reg(temp);
-			free(temp);
-			temp = crsr;
+			print_rec(init_list(crsr->abs_path, flags), type, flags);
 		}
 		crsr = crsr->next;
-		temp = clean_one(temp);
 	}
-	return (list);
+	clean_reg(list);
 }
 
-int		print_titles(t_ls *node)
+int		print_title(t_ls *node, int *flags)
 {
-	if (!node)
-		return (0);
-	ft_putstr(node->abs_path);
+	int		i;
+	int		j;
+	char	*title;
+
+	i = ft_strlen(node->abs_path);
+	j = ft_strlen(ft_strrchr(node->abs_path, '/'));
+	title = ft_strsub(node->abs_path, 0, i - j);
+	ft_putstr(title);
+	free(title);
 	ft_putstr(":\n");
-	print_total(node);
+	if (*flags & 1)
+		print_total(node);
 	return (1);
 }
 

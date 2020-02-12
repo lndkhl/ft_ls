@@ -21,11 +21,11 @@ t_ls		*add_node(t_ls *node, t_ls *list, int *flags)
 	if (!(list))
 	{
 		list = node;
-		if ((*flags & 1) && (node->name[0] != '.' || (*flags & 2)))
+		if ((*flags & 1) && !(is_dir(node)))
 			list->total = node->stat_buff.st_blocks;
 		return (list);
 	}
-	if ((*flags & 1) && (node->name[0] != '.' || (*flags & 2)))
+	if ((*flags & 1) && !(is_dir(node)))
 		list->total += node->stat_buff.st_blocks;
 	crsr = seek_end(list);
 	crsr->next = node;
