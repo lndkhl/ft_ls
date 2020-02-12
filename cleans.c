@@ -50,6 +50,19 @@ t_ls	*clean_reg(t_ls *list)
 	return (temp);
 }
 
+t_ls	*clean_one(t_ls *node)
+{
+	if (node)
+	{
+		free(node->name);
+		free(node->abs_path);
+		free(node->link_path);
+		free(node);
+		node = NULL;
+	}
+	return (node);
+}
+
 void	clean_cont(t_cont *cont)
 {
 	t_cont	*crsr;

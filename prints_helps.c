@@ -37,12 +37,15 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 				list = crsr->next;
 			if (crsr->next)
 				crsr->next->prev = crsr->prev;
-			else
+			else if (crsr->prev)
 				crsr->prev->next = NULL;
 			temp = print_rec(init_list(crsr->abs_path, flags), type, flags);
 			temp = clean_reg(temp);
+			free(temp);
+			temp = crsr;
 		}
 		crsr = crsr->next;
+		temp = clean_one(temp);
 	}
 	return (list);
 }

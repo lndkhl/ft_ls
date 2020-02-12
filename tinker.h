@@ -93,4 +93,5 @@ char					*ls_perms(int mode);
 int						filetypeletter(int mode);
 int						is_dir(t_ls *node);
 t_ls					*seek_end(t_ls *list);
+t_ls					*clean_one(t_ls *node);
 #endif
