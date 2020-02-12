@@ -38,5 +38,6 @@ t_ls	*sort(t_ls *list, int type)
 			head->next->prev = head->prev;
 		sort = update_sort(sort, head);
 	}
-	return (sort);
+	list = sort;
+	return (list);
 }

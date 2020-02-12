@@ -35,7 +35,7 @@ t_lust	*print(t_lust *behemoth, int *flags)
 		if (*flags & 1 && (!(*flags & 8)))
 			print_titles(crsr->list);
 		if (*flags & 8)
-			print_rec(crsr->list, type, flags);
+			crsr->list = print_rec(crsr->list, type, flags);
 		else
 			print_basic(crsr->list, flags);
 		crsr = crsr->next;

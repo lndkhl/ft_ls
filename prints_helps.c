@@ -16,22 +16,22 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 {
 	t_ls	*crsr;
 
-	if ((crsr = list))
+	if (!list)
+		return (list);
+	crsr = list;
+	ft_putstr(crsr->abs_path);
+	ft_putstr(":\n");
+	if (*flags & 1)
+		print_total(crsr);
+	print_basic(sort(crsr, type), flags);
+	while (crsr)
 	{
-		ft_putstr(crsr->abs_path);
-		ft_putstr(":\n");
-		if (*flags & 1)
-			print_total(crsr);
-		print_basic(sort(crsr, type), flags);
-		while (crsr)
+		if (is_dir(crsr) && ((*flags & 2) || crsr->name[0] != '.'))
 		{
-			if (is_dir(crsr) && ((*flags & 2) || crsr->name[0] != '.'))
-			{
-				ft_putchar('\n');
-				print_rec(init_list(crsr->abs_path, flags), type, flags);
-			}
-			crsr = crsr->next;
+			ft_putchar('\n');
+			print_rec(init_list(crsr->abs_path, flags), type, flags);
 		}
+		crsr = crsr->next;
 	}
 	list = clean_reg(list);
 	return (list);
