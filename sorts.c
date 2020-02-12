@@ -31,11 +31,11 @@ t_ls	*compare(t_ls *head, t_ls *temp, int type)
 {
 	if (type == 1)
 	{
-		if (head->stat_buff->st_mtime < temp->stat_buff->st_mtime)
+		if (head->stat_buff.st_mtime < temp->stat_buff.st_mtime)
 			return (temp);
-		else if (head->stat_buff->st_mtime == temp->stat_buff->st_mtime &&\
-			head->stat_buff->st_mtimespec.tv_nsec <\
-				temp->stat_buff->st_mtimespec.tv_nsec)
+		else if (head->stat_buff.st_mtime == temp->stat_buff.st_mtime &&\
+			head->stat_buff.st_mtimespec.tv_nsec <\
+				temp->stat_buff.st_mtimespec.tv_nsec)
 			return (temp);
 		return (head);
 	}

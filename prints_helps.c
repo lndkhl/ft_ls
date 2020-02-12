@@ -15,10 +15,12 @@
 t_ls	*print_rec(t_ls *list, int type, int *flags)
 {
 	t_ls	*crsr;
+	t_ls	*temp;
 
 	if (!list)
 		return (list);
 	crsr = list;
+	temp = NULL;
 	ft_putstr(crsr->abs_path);
 	ft_putstr(":\n");
 	if (*flags & 1)
@@ -29,11 +31,19 @@ t_ls	*print_rec(t_ls *list, int type, int *flags)
 		if (is_dir(crsr) && ((*flags & 2) || crsr->name[0] != '.'))
 		{
 			ft_putchar('\n');
-			print_rec(init_list(crsr->abs_path, flags), type, flags);
+			if (crsr->prev)
+				crsr->prev->next = crsr->next;
+			else
+				list = crsr->next;
+			if (crsr->next)
+				crsr->next->prev = crsr->prev;
+			else
+				crsr->prev->next = NULL;
+			temp = print_rec(init_list(crsr->abs_path, flags), type, flags);
+			temp = clean_reg(temp);
 		}
 		crsr = crsr->next;
 	}
-	list = clean_reg(list);
 	return (list);
 }
 

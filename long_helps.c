@@ -16,7 +16,7 @@ int		print_date_modded(t_ls *node)
 {
 	char	*shorter;
 
-	shorter = ft_strsub(ctime(&(node->stat_buff->st_mtime)), 4, 12);
+	shorter = ft_strsub(ctime(&(node->stat_buff.st_mtime)), 4, 12);
 	if (!node)
 	{
 		perror("print date");
@@ -26,10 +26,10 @@ int		print_date_modded(t_ls *node)
 	free(shorter);
 	ft_putchar(' ');
 	ft_putendl(node->name);
-	if (node->link_buff[0] != '\0')
+	if (node->link_path)
 	{
 		ft_putstr(" -> ");
-		ft_putendl(node->link_buff);
+		ft_putendl(node->link_path);
 	}
 	return (1);
 }

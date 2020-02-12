@@ -22,10 +22,10 @@ t_ls	*init_ls_node(const char *name, const char *path)
 		return (NULL);
 	node->next = NULL;
 	node->prev = NULL;
+	node->link_path = NULL;
 	node->name = ft_strdup(name);
 	node->abs_path = ft_strdup(path);
-	ft_memset(node->link_buff, '\0', L_MAX);
-	if (lstat(node->abs_path, node->stat_buff) == -1)
+	if (lstat(node->abs_path, &node->stat_buff) == -1)
 	{
 		perror("error");
 		return (NULL);

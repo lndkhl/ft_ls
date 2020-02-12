@@ -21,7 +21,7 @@ int			is_dir(t_ls *node)
 	}
 	if (ft_strcmp((node)->name, ".") == 0 || ft_strcmp((node)->name, "..") == 0)
 		return (0);
-	if (((node)->stat_buff->st_mode & S_IFMT) == S_IFDIR)
+	if (((node)->stat_buff.st_mode & S_IFMT) == S_IFDIR)
 		return (1);
 	return (0);
 }

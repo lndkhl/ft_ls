@@ -21,9 +21,12 @@ int		print_permissions(t_ls *node)
 		perror("permissions");
 		return (-1);
 	}
-	perms = ls_perms(node->stat_buff->st_mode);
+	perms = ls_perms(node->stat_buff.st_mode);
 	if (perms[0] == 'l')
-		readlink(node->abs_path, node->link_buff, L_MAX);
+	{
+		node->link_path = ft_strnew(L_MAX);
+		readlink(node->abs_path, node->link_path, L_MAX);
+	}
 	ft_putstr(perms);
 	free(perms);
 	ft_putstr("  ");
@@ -35,19 +38,19 @@ int		print_user(t_ls *node)
 	struct passwd	*pwuid;
 	struct group	*gid;
 
-	if (!(pwuid = getpwuid(node->stat_buff->st_uid)))
+	if (!(pwuid = getpwuid(node->stat_buff.st_uid)))
 	{
 		perror("print_user");
 		return (-1);
 	}
-	if (!(gid = getgrgid(node->stat_buff->st_gid)))
+	if (!(gid = getgrgid(node->stat_buff.st_gid)))
 	{
 		perror("print_group");
 		return (-1);
 	}
-	if ((node->stat_buff->st_nlink) / 10 == 0)
+	if ((node->stat_buff.st_nlink) / 10 == 0)
 		ft_putchar(' ');
-	ft_putnbr(node->stat_buff->st_nlink);
+	ft_putnbr(node->stat_buff.st_nlink);
 	ft_putstr("  ");
 	ft_putstr(pwuid->pw_name);
 	ft_putstr("  ");
@@ -69,7 +72,7 @@ int		print_size(t_ls *node)
 		perror("print_size");
 		return (-1);
 	}
-	size = node->stat_buff->st_size;
+	size = node->stat_buff.st_size;
 	while (size > 0)
 	{
 		padding++;
@@ -78,7 +81,7 @@ int		print_size(t_ls *node)
 	padding = buffer - padding;
 	while (padding--)
 		ft_putchar(' ');
-	ft_putnbr(node->stat_buff->st_size);
+	ft_putnbr(node->stat_buff.st_size);
 	ft_putchar(' ');
 	return (print_date_modded(node));
 }

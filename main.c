@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 	if (!behemoth)
 		return 0;
 	behemoth = print(behemoth, &flags);
-	clean(behemoth, &flags);
+	clean(behemoth);
 	sleep(30);
 	return (0);
 }

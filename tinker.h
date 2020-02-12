@@ -23,16 +23,16 @@
 # include <sys/xattr.h>
 # include <time.h>
 
-# define L_MAX 2048
+# define L_MAX 128
 
 typedef struct			s_thing
 {
 	struct s_thing		*next;
 	struct s_thing		*prev;
-	struct stat			stat_buff[L_MAX];
+	struct stat			stat_buff;
 	char				*name;
 	char				*abs_path;
-	char				link_buff[L_MAX];
+	char				*link_path;
 	blkcnt_t			total;
 }						t_ls;
 
@@ -61,7 +61,7 @@ int						print_basic(t_ls *node, int *flags);
 int						flag_check(char **av, int *flags);
 t_lust					*parse(char **av, int *f, t_lust *b, t_cont *n);
 
-void					clean(t_lust *list, int *flags);
+void					clean(t_lust *list);
 t_ls					*clean_reg(t_ls *list);
 void					clean_cont(t_cont *cont);
 int						is_d(char *name);

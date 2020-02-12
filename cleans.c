@@ -12,7 +12,7 @@
 
 #include "tinker.h"
 
-void	clean(t_lust *list, int *flags)
+void	clean(t_lust *list)
 {
 	t_lust	*crsr;
 	t_lust	*temp;
@@ -25,10 +25,7 @@ void	clean(t_lust *list, int *flags)
 			temp = crsr->next;
 		else
 			temp = NULL;
-		if (*flags & 8)
-			return ;
-		else
-			crsr->list = clean_reg(crsr->list);
+		crsr->list = clean_reg(crsr->list);
 		free(crsr->list);
 		free(crsr);
 		crsr = temp;
@@ -46,6 +43,7 @@ t_ls	*clean_reg(t_ls *list)
 		crsr = (temp->next) ? temp->next : NULL;
 		free(temp->name);
 		free(temp->abs_path);
+		free(temp->link_path);
 		free(temp);
 		temp = crsr;
 	}

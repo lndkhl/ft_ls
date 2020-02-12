@@ -30,4 +30,4 @@ fclean:
 	$(RM) $(OBJ) $(NAME) $(PESKY)
 
 re:
-	make clean && make $(NAME)
+	make fclean && make $(NAME) && make clean
