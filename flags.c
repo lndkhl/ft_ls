@@ -21,7 +21,7 @@ int		flag_check(char **av, int *flags)
 	{
 		if (av[i][0] == '-' && ft_strlen(av[i]) > 1)
 			if (!is_valid(av[i], flags))
-				return (-1);
+				return (0);
 	}
 	return (1);
 }
