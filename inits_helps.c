@@ -49,15 +49,15 @@ t_lust	*init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 		behemoth->next = NULL;
 		behemoth->prev = NULL;
 	}
-	while (crsr)
+	while (crsr->next)
 	{
+		crsr = crsr->next;
 		temp = (t_lust *)malloc(sizeof(t_lust));
 		temp->list = init_list(crsr->name, flags);
 		temp->prev = NULL;
 		temp->next = NULL;
 		behemoth = add_dir(temp, behemoth);
 		temp = NULL;
-		crsr = crsr->next;
 	}
 	directories = clean_cont(directories);
 	return (behemoth);
