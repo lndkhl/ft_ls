@@ -62,7 +62,7 @@ int						flag_check(char **av, int *flags);
 t_lust					*parse(char **av, int *f, t_lust *b, t_cont *n);
 
 void					clean(t_lust *list);
-void					clean_reg(t_ls *list);
+t_ls					*clean_reg(t_ls *list);
 void					clean_cont(t_cont *cont);
 int						is_d(char *name);
 int						is_file(char *name);
@@ -93,5 +93,5 @@ char					*ls_perms(int mode);
 int						filetypeletter(int mode);
 int						is_dir(t_ls *node);
 t_ls					*seek_end(t_ls *list);
-void					clean_one(t_ls *node);
+t_ls					*clean_one(t_ls *node);
 #endif

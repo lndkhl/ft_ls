@@ -30,32 +30,33 @@ void	clean(t_lust *list)
 	}
 }
 
-void	clean_reg(t_ls *list)
+t_ls	*clean_reg(t_ls *list)
 {
 	t_ls	*temp;
 	t_ls	*crsr;
 
 	if (!list)
-		return ;
+		return (list);
 	temp = list;
 	while (temp)
 	{
 		crsr = (temp->next) ? temp->next : NULL;
-		clean_one(temp);
+		temp = clean_one(temp);
 		temp = crsr;
 	}
+	return (list);
 }
 
-void	clean_one(t_ls *node)
+t_ls	*clean_one(t_ls *node)
 {
-	if (node)
-	{
-		free(node->name);
-		free(node->abs_path);
-		free(node->link_path);
-		free(node);
-		node = NULL;
-	}
+	if (!node)
+		return (node);
+	free(node->name);
+	free(node->abs_path);
+	free(node->link_path);
+	free(node);
+	node = NULL;
+	return (node);
 }
 
 void	clean_cont(t_cont *cont)

@@ -28,9 +28,9 @@ void	print(t_ls *list, int *flags)
 
 	if (!list)
 		return ;
-	crsr = NULL;
 	type = (*flags & 16) ? 1 : 0;
 	temp = sort(list, type);
+	crsr = temp;
 	print_basic(temp, flags);
 	if (*flags & 8)
 	{
@@ -38,16 +38,13 @@ void	print(t_ls *list, int *flags)
 		{
 			if ((is_dir(temp)) && (temp->name[0] != '.' || (*flags & 2)))
 			{
-				if ((crsr = init_list(temp->abs_path, flags)))
-				{
-					ft_putchar('\n');
-					print(crsr, flags);
-				}
+				ft_putchar('\n');
+				print(init_list(temp->abs_path, flags), flags);
 			}
 			temp = temp->next;
 		}
 	}
-	clean_reg(list);
+	list = clean_reg(crsr);
 }
 
 void	print_basic(t_ls *node, int *flags)
