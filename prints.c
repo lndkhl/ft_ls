@@ -28,6 +28,8 @@ void	print(t_ls *list, int *flags)
 
 	if (!list)
 		return ;
+	if (list->type)
+		print_title(list, flags);
 	type = (*flags & 16) ? 1 : 0;
 	temp = sort(list, type);
 	crsr = temp;
@@ -54,7 +56,6 @@ void	print_basic(t_ls *node, int *flags)
 	temp = NULL;
 	if (!(temp = node))
 		return ;
-	print_title(node, flags);
 	if (*flags & 4)
 	{
 		temp = seek_end(node);

@@ -17,7 +17,6 @@ int	main(int ac, char **av)
 	int			flags;
 	t_lust		*behemoth;
 	t_cont		*nonexistent;
-	t_lust		*crsr;
 
 	flags = 0;
 	if (ac > 1)
@@ -28,14 +27,6 @@ int	main(int ac, char **av)
 	behemoth = parse(av, &flags, behemoth, nonexistent);
 	if (!behemoth)
 		return 0;
-	crsr = behemoth;
-	while (crsr) 
-	{
-		if (crsr->prev)
-			ft_putchar('\n');
-		print(crsr->list, &flags);
-		crsr = crsr->next;
-	}
 	behemoth = clean(behemoth);
 	sleep(30);
 	return (0);

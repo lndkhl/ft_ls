@@ -34,6 +34,7 @@ typedef struct			s_thing
 	char				*abs_path;
 	char				*link_path;
 	blkcnt_t			total;
+	unsigned int		type;
 }						t_ls;
 
 typedef struct			s_body
@@ -50,7 +51,8 @@ typedef struct			s_container
 	char				*name;
 }						t_cont;
 
-t_ls					*init_ls_node(const char *n, const char *p);
+t_ls					*init_ls_node(const char *n, const char *p, unsigned\
+							int t);
 t_ls					*init_list(const char *path, int *flags);
 t_ls					*init_cwd(int *flags);
 t_ls					*add_node(t_ls *node, t_ls *list, int *flags);

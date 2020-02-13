@@ -12,7 +12,7 @@
 
 #include "tinker.h"
 
-t_ls	*init_ls_node(const char *name, const char *path)
+t_ls	*init_ls_node(const char *name, const char *path, unsigned int type)
 {
 	t_ls		*node;
 
@@ -23,6 +23,7 @@ t_ls	*init_ls_node(const char *name, const char *path)
 	node->next = NULL;
 	node->prev = NULL;
 	node->link_path = NULL;
+	node->type = type;
 	node->name = ft_strdup(name);
 	node->abs_path = ft_strdup(path);
 	if (lstat(node->abs_path, &node->stat_buff) == -1)
@@ -54,7 +55,7 @@ t_ls	*init_list(const char *path, int *flags)
 	{
 		appended = p_append(path, dir_struct->d_name);
 		if ((dir_struct->d_name[0] != '.') || (*flags & 2))
-			list = add_node((init_ls_node(dir_struct->d_name, appended)),\
+			list = add_node((init_ls_node(dir_struct->d_name, appended, 1)),\
 				list, flags);
 		free(appended);
 	}

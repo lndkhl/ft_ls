@@ -20,11 +20,13 @@ void	print_title(t_ls *node, int *flags)
 	char	*title;
 
 	if (!(temp = ft_strrchr(node->abs_path, '/')))
-		return ;
-	i = ft_strlen(node->abs_path);
-	j = ft_strlen(temp);
-	title = ft_strsub(node->abs_path, 0, i - j);
-	title = node->abs_path;
+		title = ft_strdup(node->abs_path);
+	else
+	{
+		i = ft_strlen(node->abs_path);
+		j = ft_strlen(temp);
+		title = ft_strsub(node->abs_path, 0, i - j);
+	}
 	ft_putstr(title);
 	free(title);
 	ft_putstr(":\n");

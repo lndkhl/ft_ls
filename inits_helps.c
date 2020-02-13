@@ -21,11 +21,11 @@ t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 		return (NULL);
 	crsr = files;
 	behemoth = (t_lust *)malloc(sizeof(t_lust));
-	list = init_ls_node(crsr->name, crsr->name);
+	list = init_ls_node(crsr->name, crsr->name, 0);
 	while (crsr->next)
 	{
 		crsr = crsr->next;
-		list = add_node(init_ls_node(crsr->name, crsr->name), list, flags);
+		list = add_node(init_ls_node(crsr->name, crsr->name, 0), list, flags);
 	}
 	behemoth->list = list;
 	behemoth->prev = NULL;
@@ -60,6 +60,8 @@ t_lust	*init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 
 t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
 {
+	t_lust	*crsr;
+
 	behemoth = init_files(files, behemoth, flags);
 	behemoth = init_directories(directories, behemoth, flags);
 	if (!(behemoth))
@@ -68,7 +70,16 @@ t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
 		behemoth->list = init_cwd(flags);
 		behemoth->prev = NULL;
 		behemoth->next = NULL;
+		print(behemoth->list, flags);
 		return (behemoth);
+	}
+	crsr = behemoth;
+	while (crsr)
+	{
+		if (crsr->prev)
+			ft_putchar('\n');
+		print(crsr->list, flags);
+		crsr = crsr->next;
 	}
 	return (behemoth);
 }
