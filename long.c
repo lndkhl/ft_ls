@@ -40,15 +40,17 @@ int		print_user(t_ls *node)
 
 	if (!(pwuid = getpwuid(node->stat_buff.st_uid)))
 	{
-		perror("print_user");
+		perror("print_user error");
 		return (-1);
 	}
 	if (!(gid = getgrgid(node->stat_buff.st_gid)))
 	{
-		perror("print_group");
+		perror("print_group error");
 		return (-1);
 	}
 	if ((node->stat_buff.st_nlink) / 10 == 0)
+		ft_putstr("  ");
+	else if ((node->stat_buff.st_nlink) / 100 == 0)
 		ft_putchar(' ');
 	ft_putnbr(node->stat_buff.st_nlink);
 	ft_putstr("  ");
@@ -66,7 +68,7 @@ int		print_size(t_ls *node)
 	int	padding;
 
 	padding = 0;
-	buffer = 9;
+	buffer = 10;
 	if (!node)
 	{
 		perror("print_size");
