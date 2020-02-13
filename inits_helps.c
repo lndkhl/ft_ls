@@ -18,7 +18,7 @@ t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 	t_ls	*list;
 
 	if (!(files))
-		return (NULL);
+		return (behemoth);
 	crsr = files;
 	behemoth = (t_lust *)malloc(sizeof(t_lust));
 	list = init_ls_node(crsr->name, crsr->name, 0);
@@ -37,19 +37,24 @@ t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 t_lust	*init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 {
 	t_cont	*crsr;
-	t_ls	*list;
 	t_lust	*temp;
 
 	if (!(directories))
 		return (behemoth);
 	crsr = directories;
+	if (!(behemoth))
+	{
+		behemoth = (t_lust *)malloc(sizeof(t_lust));
+		behemoth->list = init_list(crsr->name, flags);
+		behemoth->next = NULL;
+		behemoth->prev = NULL;
+	}
 	while (crsr)
 	{
 		temp = (t_lust *)malloc(sizeof(t_lust));
-		temp->next = NULL;
+		temp->list = init_list(crsr->name, flags);
 		temp->prev = NULL;
-		list = init_list(crsr->name, flags);
-		temp->list = list;
+		temp->next = NULL;
 		behemoth = add_dir(temp, behemoth);
 		temp = NULL;
 		crsr = crsr->next;

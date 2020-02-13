@@ -18,12 +18,6 @@ t_lust	*add_dir(t_lust *node, t_lust *list)
 
 	if (!(node))
 		return (list);
-	if (!(list))
-	{
-		list = (t_lust *)malloc(sizeof(t_lust));
-		list = node;
-		return (list);
-	}
 	crsr = list;
 	while (crsr->next)
 		crsr = crsr->next;
