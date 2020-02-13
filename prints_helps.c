@@ -12,50 +12,29 @@
 
 #include "tinker.h"
 
-void	print_rec(t_ls *list, int type, int *flags)
-{
-	t_ls	*crsr;
-
-	if (!list)
-		return ;
-	crsr = list;
-	print_title(crsr, flags);
-	if (*flags & 1)
-		print_total(crsr);
-	print_basic(sort(crsr, type), flags);
-	while (crsr)
-	{
-		if (is_d(crsr->abs_path))
-		{
-			ft_putchar('\n');
-			print_rec(init_list(crsr->abs_path, flags), type, flags);
-		}
-		crsr = crsr->next;
-	}
-	clean_reg(list);
-}
-
-int		print_title(t_ls *node, int *flags)
+void	print_title(t_ls *node, int *flags)
 {
 	int		i;
 	int		j;
+	char	*temp;
 	char	*title;
 
+	if (!(temp = ft_strrchr(node->abs_path, '/')))
+		return ;
 	i = ft_strlen(node->abs_path);
-	j = ft_strlen(ft_strrchr(node->abs_path, '/'));
+	j = ft_strlen(temp);
 	title = ft_strsub(node->abs_path, 0, i - j);
+	title = node->abs_path;
 	ft_putstr(title);
 	free(title);
 	ft_putstr(":\n");
 	if (*flags & 1)
 		print_total(node);
-	return (1);
 }
 
-int		print_total(t_ls *node)
+void	print_total(t_ls *node)
 {
 	ft_putstr("total ");
 	ft_putnbr(node->total);
 	ft_putchar('\n');
-	return (1);
 }

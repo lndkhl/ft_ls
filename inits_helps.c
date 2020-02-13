@@ -30,7 +30,7 @@ t_lust	*init_files(t_cont *files, t_lust *behemoth, int *flags)
 	behemoth->list = list;
 	behemoth->prev = NULL;
 	behemoth->next = NULL;
-	clean_cont(files);
+	files = clean_cont(files);
 	return (behemoth);
 }
 
@@ -54,7 +54,7 @@ t_lust	*init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 		temp = NULL;
 		crsr = crsr->next;
 	}
-	clean_cont(directories);
+	directories = clean_cont(directories);
 	return (behemoth);
 }
 

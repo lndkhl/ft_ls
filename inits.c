@@ -53,7 +53,7 @@ t_ls	*init_list(const char *path, int *flags)
 	while ((dir_struct = readdir(d)))
 	{
 		appended = p_append(path, dir_struct->d_name);
-		if ((dir_struct->d_name[0] != '.')|| (*flags & 2))
+		if ((dir_struct->d_name[0] != '.') || (*flags & 2))
 			list = add_node((init_ls_node(dir_struct->d_name, appended)),\
 				list, flags);
 		free(appended);
@@ -64,6 +64,7 @@ t_ls	*init_list(const char *path, int *flags)
 		ft_putstr(":\n");
 	}
 	closedir(d);
+	free(dir_struct);
 	return (list);
 }
 

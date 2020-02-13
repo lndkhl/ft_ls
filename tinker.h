@@ -61,9 +61,9 @@ void					print_basic(t_ls *node, int *flags);
 int						flag_check(char **av, int *flags);
 t_lust					*parse(char **av, int *f, t_lust *b, t_cont *n);
 
-void					clean(t_lust *list);
+t_lust					*clean(t_lust *list);
 t_ls					*clean_reg(t_ls *list);
-void					clean_cont(t_cont *cont);
+t_cont					*clean_cont(t_cont *cont);
 int						is_d(char *name);
 int						is_file(char *name);
 t_cont					*push(t_cont *container, char *item);
@@ -80,9 +80,8 @@ int						print_nonexistant(t_cont *nonexistant);
 t_lust					*init_files(t_cont *f, t_lust *b, int *flags);
 t_lust					*init_directories(t_cont *d, t_lust *b, int *f);
 t_lust					*init(int *f, t_cont *fi, t_cont *d, t_lust *b);
-void					print_rec(t_ls *list, int type, int *flags);
-int						print_title(t_ls *node, int *flags);
-int						print_total(t_ls *node);
+void					print_title(t_ls *node, int *flags);
+void					print_total(t_ls *node);
 int						print_invalid(t_cont *nonexistant);
 
 int						print_illegal(char c);

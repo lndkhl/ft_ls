@@ -12,22 +12,21 @@
 
 #include "tinker.h"
 
-void	clean(t_lust *list)
+t_lust	*clean(t_lust *list)
 {
 	t_lust	*crsr;
 	t_lust	*temp;
 
-	if (!(crsr = list))
-		return ;
+	if (!list)
+		return (list);
+	crsr = list;
 	while (crsr)
 	{
 		temp = (crsr->next) ? crsr->next : NULL;
-		if(crsr->list)
-			clean_reg(crsr->list);
-		free(crsr->list);
 		free(crsr);
 		crsr = temp;
 	}
+	return (list);
 }
 
 t_ls	*clean_reg(t_ls *list)
@@ -59,21 +58,20 @@ t_ls	*clean_one(t_ls *node)
 	return (node);
 }
 
-void	clean_cont(t_cont *cont)
+t_cont	*clean_cont(t_cont *cont)
 {
 	t_cont	*crsr;
 	t_cont	*temp;
 
-	if (!(crsr = cont))
-		return ;
+	if (!cont)
+		return (cont);
+	crsr = cont;
 	while (crsr)
 	{
-		if (crsr->next)
-			temp = crsr->next;
-		else
-			temp = NULL;
+		temp = (crsr->next) ? crsr->next : NULL;
 		free(crsr->name);
 		free(crsr);
 		crsr = temp;
 	}
+	return (cont);
 }

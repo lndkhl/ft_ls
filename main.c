@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 		print(crsr->list, &flags);
 		crsr = crsr->next;
 	}
-	//clean(behemoth);
+	behemoth = clean(behemoth);
 	sleep(30);
 	return (0);
 }
