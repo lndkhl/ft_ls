@@ -58,7 +58,7 @@ t_lust	*init_directories(t_cont *directories, t_lust *behemoth, int *flags)
 	return (behemoth);
 }
 
-t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
+void	init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
 {
 	t_lust	*crsr;
 
@@ -71,15 +71,18 @@ t_lust	*init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
 		behemoth->prev = NULL;
 		behemoth->next = NULL;
 		print(behemoth->list, flags);
-		return (behemoth);
+		behemoth = clean(behemoth);
 	}
-	crsr = behemoth;
-	while (crsr)
+	else
 	{
-		if (crsr->prev)
-			ft_putchar('\n');
-		print(crsr->list, flags);
-		crsr = crsr->next;
+		crsr = behemoth;
+		while (crsr)
+		{
+			if (crsr->prev)
+				ft_putchar('\n');
+			print(crsr->list, flags);
+			crsr = crsr->next;
+		}
+		behemoth = clean(behemoth);
 	}
-	return (behemoth);
 }

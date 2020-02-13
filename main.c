@@ -24,10 +24,7 @@ int	main(int ac, char **av)
 			return (0);
 	behemoth = NULL;
 	nonexistent = NULL;
-	behemoth = parse(av, &flags, behemoth, nonexistent);
-	if (!behemoth)
-		return 0;
-	behemoth = clean(behemoth);
+	parse(av, &flags, behemoth, nonexistent);
 	sleep(30);
 	return (0);
 }

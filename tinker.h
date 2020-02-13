@@ -61,7 +61,7 @@ int						print_node(t_ls *node, int *flags);
 void					print(t_ls *list, int *flags);
 void					print_basic(t_ls *node, int *flags);
 int						flag_check(char **av, int *flags);
-t_lust					*parse(char **av, int *f, t_lust *b, t_cont *n);
+void					parse(char **av, int *f, t_lust *b, t_cont *n);
 
 t_lust					*clean(t_lust *list);
 t_ls					*clean_reg(t_ls *list);
@@ -81,7 +81,7 @@ int						is_valid(char *av_i, int *flags);
 int						print_nonexistant(t_cont *nonexistant);
 t_lust					*init_files(t_cont *f, t_lust *b, int *flags);
 t_lust					*init_directories(t_cont *d, t_lust *b, int *f);
-t_lust					*init(int *f, t_cont *fi, t_cont *d, t_lust *b);
+void					init(int *f, t_cont *fi, t_cont *d, t_lust *b);
 void					print_title(t_ls *node, int *flags);
 void					print_total(t_ls *node);
 int						print_invalid(t_cont *nonexistant);

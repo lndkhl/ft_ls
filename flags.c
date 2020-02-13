@@ -26,7 +26,7 @@ int		flag_check(char **av, int *flags)
 	return (1);
 }
 
-t_lust	*parse(char **av, int *flags, t_lust *behemoth, t_cont *nonexistant)
+void	parse(char **av, int *flags, t_lust *behemoth, t_cont *nonexistant)
 {
 	int		i;
 	char	*append;
@@ -34,6 +34,7 @@ t_lust	*parse(char **av, int *flags, t_lust *behemoth, t_cont *nonexistant)
 	t_cont	*files;
 
 	i = 1;
+	append = NULL;
 	directories = NULL;
 	files = NULL;
 	while (av[i] != NULL && av[i][0] == '-')
@@ -50,7 +51,6 @@ t_lust	*parse(char **av, int *flags, t_lust *behemoth, t_cont *nonexistant)
 		free(append);
 	}
 	if (print_nonexistant(nonexistant) && (!files && !directories))
-		return (NULL);
-	behemoth = init(flags, files, directories, behemoth);
-	return (behemoth);
+		exit(0);
+	init(flags, files, directories, behemoth);
 }
