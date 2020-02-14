@@ -25,6 +25,8 @@ int	main(int ac, char **av)
 	behemoth = NULL;
 	nonexistent = NULL;
 	parse(av, &flags, behemoth, nonexistent);
+	/*
 	sleep(30);
+	*/
 	return (0);
 }
