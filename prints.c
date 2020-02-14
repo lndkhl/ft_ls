@@ -36,6 +36,7 @@ void	print(t_ls *list, int *flags)
 	print_basic(temp, flags);
 	if (*flags & 8)
 	{
+		temp = (*flags & 4) ? seek_end(temp) : temp;
 		while (temp)
 		{
 			if ((is_dir(temp)) && (temp->name[0] != '.' || (*flags & 2)))
@@ -43,7 +44,7 @@ void	print(t_ls *list, int *flags)
 				ft_putchar('\n');
 				print(init_list(temp->abs_path, flags), flags);
 			}
-			temp = temp->next;
+			temp = (*flags & 4) ? temp->prev : temp->next;
 		}
 	}
 	list = clean_reg(crsr);
