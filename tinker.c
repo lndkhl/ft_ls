@@ -52,3 +52,23 @@ char		*p_append(const char *path, const char *name)
 	free(temp);
 	return (appended);
 }
+
+t_cont		*update_dirs(t_cont *sort, t_cont *head)
+{
+	t_cont	*temp;
+
+	temp = NULL;
+	if (!(temp = seek_last(sort)))
+	{
+		sort = head;
+		head->next = NULL;
+		head->prev = NULL;
+	}
+	else
+	{
+		temp->next = head;
+		head->next = NULL;
+		head->prev = temp;
+	}
+	return (sort);
+}

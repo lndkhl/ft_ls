@@ -68,7 +68,7 @@ void	init(int *flags, t_cont *files, t_cont *directories, t_lust *behemoth)
 	t_lust	*crsr;
 
 	behemoth = init_files(files, behemoth, flags);
-	behemoth = init_directories(directories, behemoth, flags);
+	behemoth = init_directories(sort_dirs(directories), behemoth, flags);
 	if (!(behemoth))
 	{
 		behemoth = (t_lust *)malloc(sizeof(t_lust));

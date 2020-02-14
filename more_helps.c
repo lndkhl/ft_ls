@@ -41,3 +41,22 @@ t_ls	*sort(t_ls *list, int type)
 	list = sort;
 	return (list);
 }
+
+t_cont	*compare_dirs(t_cont *head, t_cont *temp)
+{
+	if (ft_strcmp(temp->name, head->name) < 1)
+		return (temp);
+	return (head);
+}
+
+t_cont	*seek_last(t_cont *list)
+{
+	t_cont	*temp;
+
+	if (!(list))
+		return (list);
+	temp = list;
+	while (temp->next)
+		temp = temp->next;
+	return (temp);
+}

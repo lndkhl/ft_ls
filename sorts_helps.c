@@ -32,21 +32,32 @@ t_ls	*update_sort(t_ls *sort, t_ls *head)
 	return (sort);
 }
 
-void	sort_dirs(t_cont *directories)
+t_cont		*sort_dirs(t_cont *directories)
 {
 	t_cont	*temp;
-	t_cont	*crsr;
-	t_cont	*swap;
+	t_cont	*sort;
+	t_cont	*head;
+	int		j;
 
-	while ((temp = directories))
+	sort = NULL;
+	j = count_dirs(directories);
+	while ((directories) && j--)
 	{
-		crsr = directories->next;
-		while (crsr)
-			if (ft_strcmp(temp->name, crsr->name) > 0)
-			{
-				swap = temp;
-				crsr = crsr->next;
-			}
-		temp = temp->next;
+		head = directories;
+		temp = directories->next;
+		while (temp)
+		{
+			head = compare_dirs(head, temp);
+			temp = temp->next;
+		}
+		if (head == directories)
+			directories = directories->next;
+		else if (head->prev)
+			head->prev->next = head->next;
+		if (head->next)
+			head->next->prev = head->prev;
+		sort = update_dirs(sort, head);
 	}
+	directories = sort;
+	return (directories);
 }

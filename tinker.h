@@ -88,11 +88,15 @@ int						print_invalid(t_cont *nonexistant);
 
 int						print_illegal(char c);
 t_ls					*update_sort(t_ls *sort, t_ls *head);
-void					sort_dirs(t_cont *directories);
+t_cont					*sort_dirs(t_cont *directories);
 int						print_date_modded(t_ls *node);
 char					*ls_perms(int mode);
 int						filetypeletter(int mode);
 int						is_dir(t_ls *node);
 t_ls					*seek_end(t_ls *list);
 t_ls					*clean_one(t_ls *node);
+int						count_dirs(t_cont *directories);
+t_cont					*compare_dirs(t_cont *head, t_cont *temp);
+t_cont					*update_dirs(t_cont *sort, t_cont *head);
+t_cont					*seek_last(t_cont *list);
 #endif

@@ -31,9 +31,24 @@ t_ls		*seek_end(t_ls *list)
 	t_ls	*temp;
 
 	if (!(list))
-		return (NULL);
-	temp = (list);
+		return (list);
+	temp = list;
 	while (temp->next)
 		temp = temp->next;
 	return (temp);
+}
+
+int			count_dirs(t_cont *directories)
+{
+	t_cont	*crsr;
+	int		j;
+
+	j = 0;
+	crsr = directories;
+	while (crsr)	
+	{
+		j++;
+		crsr = crsr->next;
+	}
+	return (j);
 }
