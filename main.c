@@ -6,7 +6,7 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:23:12 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/11 10:00:03 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/14 09:20:51 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,5 @@ int	main(int ac, char **av)
 	behemoth = NULL;
 	nonexistent = NULL;
 	parse(av, &flags, behemoth, nonexistent);
-	/*
-	sleep(30);
-	*/
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:23 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/11 08:37:36 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/14 08:55:17 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ void	print(t_ls *list, int *flags)
 {
 	t_ls	*temp;
 	t_ls	*crsr;
-	int		type;
 
 	if (!list)
 		return ;
 	if (list->type)
 		print_title(list, flags);
-	type = (*flags & 16) ? 1 : 0;
-	temp = sort(list, type);
+	temp = (*flags & 16) ? sort(list, 1) : sort(list, 0);
 	crsr = temp;
 	print_basic(temp, flags);
 	if (*flags & 8)

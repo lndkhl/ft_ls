@@ -6,7 +6,7 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 08:50:10 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/11 09:59:08 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/14 09:19:30 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void					init(int *f, t_cont *fi, t_cont *d, t_lust *b);
 void					print_title(t_ls *node, int *flags);
 void					print_total(t_ls *node);
 int						print_invalid(t_cont *nonexistant);
+void					empty_dir(const char *path);
 
 int						print_illegal(char c);
 t_ls					*update_sort(t_ls *sort, t_ls *head);

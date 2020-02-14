@@ -6,7 +6,7 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 08:48:00 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/11 08:48:29 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/14 08:21:00 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			count_dirs(t_cont *directories)
 
 	j = 0;
 	crsr = directories;
-	while (crsr)	
+	while (crsr)
 	{
 		j++;
 		crsr = crsr->next;

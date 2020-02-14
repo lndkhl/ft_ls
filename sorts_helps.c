@@ -6,7 +6,7 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 07:10:51 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/11 08:54:10 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/14 09:18:51 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_ls	*update_sort(t_ls *sort, t_ls *head)
 	return (sort);
 }
 
-t_cont		*sort_dirs(t_cont *directories)
+t_cont	*sort_dirs(t_cont *directories)
 {
 	t_cont	*temp;
 	t_cont	*sort;
@@ -58,6 +58,5 @@ t_cont		*sort_dirs(t_cont *directories)
 			head->next->prev = head->prev;
 		sort = update_dirs(sort, head);
 	}
-	directories = sort;
-	return (directories);
+	return (sort);
 }
