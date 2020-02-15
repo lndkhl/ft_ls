@@ -6,71 +6,72 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:23:48 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/03 17:23:50 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/11 08:24:14 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-void	clean(t_lust *list)
+t_lust	*clean(t_lust *list)
 {
 	t_lust	*crsr;
+	t_lust	*temp;
 
+	if (!list)
+		return (list);
 	crsr = list;
 	while (crsr)
 	{
-		clean_one(crsr->list);
-		crsr = crsr->next;
+		temp = (crsr->next) ? crsr->next : NULL;
+		free(crsr);
+		crsr = temp;
 	}
+	return (list);
 }
 
-void	clean_one(t_ls *head)
+t_ls	*clean_reg(t_ls *list)
 {
 	t_ls	*temp;
+	t_ls	*crsr;
 
-	if (!(temp = head))
-		return ;
+	if (!list)
+		return (list);
+	temp = list;
 	while (temp)
 	{
-		ft_strdel(&(temp->name));
-		ft_strdel(&(temp->abs_path));
-		ft_strdel(&(temp->dir_name));
-		temp = temp->next;
+		crsr = (temp->next) ? temp->next : NULL;
+		temp = clean_one(temp);
+		temp = crsr;
 	}
+	return (list);
 }
 
-void	clean_string(t_cont *cont)
+t_ls	*clean_one(t_ls *node)
 {
-	t_cont 	*crsr;
+	if (!node)
+		return (node);
+	free(node->name);
+	free(node->abs_path);
+	free(node->link_path);
+	free(node);
+	node = NULL;
+	return (node);
+}
 
-	if (!(cont))
-		return ;
-	while ((crsr = cont))
+t_cont	*clean_cont(t_cont *cont)
+{
+	t_cont	*crsr;
+	t_cont	*temp;
+
+	if (!cont)
+		return (cont);
+	crsr = cont;
+	while (crsr)
 	{
-		ft_strdel(&(crsr->name));
-		crsr = crsr->next;
+		temp = (crsr->next) ? crsr->next : NULL;
+		free(crsr->name);
+		free(crsr);
+		crsr = temp;
 	}
-}
-
-int		filetypeletter(int mode)
-{
-	char    c;
-
-	if (S_ISREG(mode))
-		c = '-';
-	else if (S_ISDIR(mode))
-		c = 'd';
-	else if (S_ISBLK(mode))
-		c = 'b';
-	else if (S_ISCHR(mode))
-		c = 'c';
-	else if (S_ISFIFO(mode))
-		c = 'p';
-	else if (S_ISLNK(mode))
-		c = 'l';
-	else if (S_ISSOCK(mode))
-		c = 's';
-	else
-		c = '?';
-	return(c);
+	return (cont);
 }

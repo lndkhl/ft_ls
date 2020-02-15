@@ -1,62 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sorts_helps.c                                      :+:      :+:    :+:   */
+/*   more_helps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 07:10:51 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/14 09:18:51 by lnkambul         ###   ########.fr       */
+/*   Created: 2020/02/11 08:54:35 by lnkambul          #+#    #+#             */
+/*   Updated: 2020/02/14 09:18:20 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-t_ls	*update_sort(t_ls *sort, t_ls *head)
+t_ls	*sort(t_ls *list, int type)
 {
 	t_ls	*temp;
-
-	temp = NULL;
-	if (!(temp = seek_end(sort)))
-	{
-		sort = head;
-		head->next = NULL;
-		head->prev = NULL;
-	}
-	else
-	{
-		temp->next = head;
-		head->next = NULL;
-		head->prev = temp;
-	}
-	return (sort);
-}
-
-t_cont	*sort_dirs(t_cont *directories)
-{
-	t_cont	*temp;
-	t_cont	*sort;
-	t_cont	*head;
+	t_ls	*sort;
+	t_ls	*head;
 	int		j;
 
 	sort = NULL;
-	j = count_dirs(directories);
-	while ((directories) && j--)
+	j = count_nodes(list);
+	while ((list) && j--)
 	{
-		head = directories;
-		temp = directories->next;
+		head = list;
+		temp = list->next;
 		while (temp)
 		{
-			head = compare_dirs(head, temp);
+			head = compare(head, temp, type);
 			temp = temp->next;
 		}
-		if (head == directories)
-			directories = directories->next;
+		if (head == list)
+			list = list->next;
 		else if (head->prev)
 			head->prev->next = head->next;
 		if (head->next)
 			head->next->prev = head->prev;
-		sort = update_dirs(sort, head);
+		sort = update_sort(sort, head);
 	}
 	return (sort);
+}
+
+t_cont	*compare_dirs(t_cont *head, t_cont *temp)
+{
+	if (ft_strcmp(temp->name, head->name) < 1)
+		return (temp);
+	return (head);
+}
+
+t_cont	*seek_last(t_cont *list)
+{
+	t_cont	*temp;
+
+	if (!(list))
+		return (list);
+	temp = list;
+	while (temp->next)
+		temp = temp->next;
+	return (temp);
 }

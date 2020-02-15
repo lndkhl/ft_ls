@@ -1,5 +1,5 @@
 INCL = tinker.h
-CC = gcc -g
+CC = gcc
 FLAGS = -Wall -Werror -Wextra
 NAME = ft_ls
 PESKY = tinker.h.gch
@@ -7,7 +7,8 @@ LPATH = -L./libft
 LIB = -lft
 OBJ = $(CF:.c=.o)
 CF = tinker.c main.c cleans.c inits.c prints.c flags.c helpers.c long.c\
-	 sorts.c flags_helps.c
+	 sorts.c flags_helps.c inits_helps.c prints_helps.c sorts_helps.c\
+		more_prints.c tinker_helps.c long_helps.c more_helps.c
 RM = rm -f
 
 $(NAME): $(OBJ)
@@ -29,4 +30,4 @@ fclean:
 	$(RM) $(OBJ) $(NAME) $(PESKY)
 
 re:
-	make clean && make $(NAME)
+	make fclean && make $(NAME) && make clean

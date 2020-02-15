@@ -6,14 +6,13 @@
 /*   By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:24:23 by lnkambul          #+#    #+#             */
-/*   Updated: 2020/02/03 17:24:24 by lnkambul         ###   ########.fr       */
+/*   Updated: 2020/02/14 08:55:17 by lnkambul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tinker.h"
 
-//prints the filename associated with a given node
-int	print_node(t_ls *node, int *flags)
+int		print_node(t_ls *node, int *flags)
 {
 	if (!(node))
 		return (-1);
@@ -21,45 +20,47 @@ int	print_node(t_ls *node, int *flags)
 	return (1);
 }
 
-//prints the list via one of the print_node functions
-int	print(t_lust *behemoth, int *flags)
+void	print(t_ls *list, int *flags)
 {
-	t_lust	*crsr;
-	int		type;
+	t_ls	*temp;
+	t_ls	*crsr;
 
-	crsr = behemoth;
-	while (crsr)
+	if (!list)
+		return ;
+	if (list->type)
+		print_title(list, flags);
+	temp = (*flags & 16) ? sort(list, 1) : sort(list, 0);
+	crsr = temp;
+	print_basic(temp, flags);
+	if (*flags & 8)
 	{
-		if (crsr->prev)
-			ft_putchar('\n');
-		type = (*flags & 16) ? 1 : 0;
-		crsr->list = sort(crsr->list, type);
-		if (*flags & 1 && (!(*flags & 8)))
-			print_titles(crsr->list);
-		if (*flags & 8)
-			print_rec(crsr->list, type, flags);
-		else 
-			print_basic(crsr->list, flags);
-		crsr = crsr->next;
+		temp = (*flags & 4) ? seek_end(temp) : temp;
+		while (temp)
+		{
+			if ((is_dir(temp)) && (temp->name[0] != '.' || (*flags & 2)))
+			{
+				ft_putchar('\n');
+				print(init_list(temp->abs_path, flags), flags);
+			}
+			temp = (*flags & 4) ? temp->prev : temp->next;
+		}
 	}
-	return (0);
+	list = clean_reg(crsr);
 }
 
-//prints each node according to the desired formatting
-int	print_basic(t_ls *node, int *flags)
+void	print_basic(t_ls *node, int *flags)
 {
 	t_ls	*temp;
 
 	temp = NULL;
 	if (!(temp = node))
-		return (-1);
+		return ;
 	if (*flags & 4)
 	{
 		temp = seek_end(node);
 		while (temp)
 		{
-			if ((*flags & 2) || (temp)->name[0] != '.')
-				print_node(temp, flags);
+			print_node(temp, flags);
 			temp = temp->prev;
 		}
 	}
@@ -67,57 +68,8 @@ int	print_basic(t_ls *node, int *flags)
 	{
 		while (temp)
 		{
-			if ((*flags & 2) || (temp)->name[0] != '.')
-				print_node(temp, flags);
+			print_node(temp, flags);
 			temp = temp->next;
 		}
 	}
-	return (1);
-}
-
-//prints recursively
-t_ls	*print_rec(t_ls *list, int type, int *flags)
-{
-	t_ls	*temp;
-	t_ls	*crsr;
-
-	temp = list;
-	if ((crsr = temp))
-	{
-		if (*flags & 1 && !(*flags & 8))
-		{
-			ft_putstr("total ");
-			ft_putnbr(crsr->total);
-		}
-		ft_putchar('\n');
-		print_basic(sort(crsr, type), flags);
-		while (crsr)
-		{
-			if (is_dir(crsr) && ((*flags & 2) || crsr->name[0] != '.'))
-			{
-				ft_putchar('\n');
-				ft_putstr(crsr->abs_path);
-				ft_putstr(":\n");
-				print_rec(init_list(crsr->abs_path, flags), type, flags);
-			}
-			crsr = crsr->next;
-		}
-	}
-	//clean_one(temp);
-	return (temp);
-}
-
-int	print_titles(t_ls *node)
-{	
-	if (!node)
-		return (0);
-	if (node->dir_name)
-	{
-		ft_putstr(node->dir_name);
-		ft_putstr(":\n");
-	}
-	ft_putstr("total ");
-	ft_putnbr(node->total);
-	ft_putchar('\n');
-	return (1);
 }
