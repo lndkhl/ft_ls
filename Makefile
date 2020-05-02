@@ -1,33 +1,51 @@
-INCL = tinker.h
-CC = gcc
-FLAGS = -Wall -Werror -Wextra
-NAME = ft_ls
-PESKY = tinker.h.gch
-LPATH = -L./libft
-LIB = -lft
-OBJ = $(CF:.c=.o)
-CF = tinker.c main.c cleans.c inits.c prints.c flags.c helpers.c long.c\
-	 sorts.c flags_helps.c inits_helps.c prints_helps.c sorts_helps.c\
-		more_prints.c tinker_helps.c long_helps.c more_helps.c
-RM = rm -f
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: lnkambul <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/05/21 14:40:09 by lnkambul          #+#    #+#              #
+#    Updated: 2019/07/22 11:43:34 by lnkambul         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LPATH) $(LIB)
+FLAGS	= -Wall -Werror -Wextra
+CC	= gcc
 
-all: $(OBJ) $(LIB) 
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LPATH) $(LIB)
+NAME	= ft_ls
+IDIR	= ./includes/
+BDIR	= ./build/
+SDIR	= ./sources/
+LDIR	= ./libft/
+LBFT	= ./libft/libft.a
+SRCS	= $(shell ls $(SDIR) | grep -E ".+\.c")
+SRCE	= $(addprefix $(SDIR), $(SRCS))
+OBJS	= $(addprefix $(BDIR), $(SRCS:.c=.o))
 
-$(OBJ):
-	$(CC) $(FLAGS) -c $(CF) $(INCL)
+.DELETE_ON_ERROR:
+all: $(BDIR) $(LIBFT) $(NAME)
 
-$(LIB):
-	cd libft/ && make fclean && make all && make clean
+$(BDIR):
+	@echo "making $(NAME)"
+	@mkdir $(BDIR)
 
-clean: $(NAME)
-	$(RM) $(OBJ) $(PESKY)
+$(BDIR)%.o: $(SDIR)%.c
+	@$(CC) $(CFLAGS) -I $(IDIR) -o $@ -c $<
+
+$(LBFT):
+	@make -C $(LDIR)
+
+$(NAME): $(OBJS)
+	@$(CC) $(FLAGS) $(OBJS) -L $(LDIR) $(LBFT) -o $(NAME)
+	@echo "made $(NAME)"
+
+clean:
+	@rm -f $(OBJECTS)
 
 fclean:
-	$(RM) $(OBJ) $(NAME) $(PESKY)
+	@rm -f $(OBJECTS) $(NAME)
 
-re:
-	make fclean && make $(NAME) && make clean
+re: fclean all
+
+.PHONY: all fclean clean re
