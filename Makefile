@@ -24,7 +24,7 @@ SRCE	= $(addprefix $(SDIR), $(SRCS))
 OBJS	= $(addprefix $(BDIR), $(SRCS:.c=.o))
 
 .DELETE_ON_ERROR:
-all: $(BDIR) $(LIBFT) $(NAME)
+all: $(BDIR) $(LBFT) $(NAME)
 
 $(BDIR):
 	@echo "making $(NAME)"
